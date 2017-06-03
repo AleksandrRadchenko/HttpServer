@@ -1,9 +1,23 @@
 package javase01.t01;
 
+/**
+* Finds the least number of the sequence elements, wich satisfies M condition. 
+* Prints this number and all elements a_i, where i = 1, 2, ..., n.
+* a_n = 1 / (n + 1)^2, M : a_n < E.
+* @param args E - positive real number
+* @exception Nothing
+*/
+
 public class Task02 {
 	public static void main (String[] args) {
-		System.out.println(checkArgs(args));
+		printResult(calcN(checkArgs(args)));
 	}
+
+	/**
+	* Checks whether args contain acceptable E. Stops execution in any other case.
+	* @param args args[0] should be positive real number
+	* @return double args[0] if it parses to double
+	*/
 
 	static double checkArgs(String[] args) {
 		if (args.length == 0) {
@@ -18,9 +32,35 @@ public class Task02 {
 				System.exit(0);
 			}
 		} catch (NumberFormatException e) {
-			System.out.println("Epsilon should be positive double (parsing exception)");
+			System.out.println("Epsilon should be positive double (NumberFormatException)");
 			System.exit(0);
 		}
+		System.out.printf("E=%f%n", result); 
 		return result;
+	}
+
+	/**
+	* Calculate n. Algorithm time complexity O(1)
+	* @pararm double E - positive real number
+	* @return long n
+	*/
+	static long calcN (double E) {
+		return (long) (1.0/Math.sqrt(E));
+	}
+
+	/**
+	* Prints n and all elements a_i, where i = 1,2,...,n;
+	* @param long n number of the least element, wich satisfies M condition
+	* @return void
+	*/
+	static void printResult (long n) {
+		n = n == 0 ? 1 : n;
+		System.out.printf("Number of the least element, wich satisfies M condition: %d%n", n); 
+		System.out.print("Elements: ");
+		for (int i = 1; i < n; i++) {
+			System.out.printf("a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
+		}
+		System.out.printf("a_%d=%f", n, 1/Math.pow(n + 1, 2));
+		System.out.println();
 	}
 }
