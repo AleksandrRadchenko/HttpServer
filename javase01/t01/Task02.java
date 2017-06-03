@@ -15,7 +15,7 @@ public class Task02 {
 	/**
 	* Checks whether args contain acceptable E. Stops execution in any other case.
 	* @param args args[0] should be positive real number
-	* @return double args[0] if it parses to double
+	* @return double contents of args[0] if it parses to double
 	*/
 
 	public static double checkArgs(String[] args) {
@@ -40,7 +40,7 @@ public class Task02 {
 
 	/**
 	* Calculate n. Algorithm time complexity O(1)
-	* @param E - positive real number
+	* @param E positive real number
 	* @return long n
 	*/
 	public static long calcN (double E) {
@@ -48,8 +48,8 @@ public class Task02 {
 	}
 
 	/**
-	* Prints n and all elements a_i, where i = 1,2,...,n;
-	* @param n number of the least element, wich satisfies M condition
+	* Prints n and all elements a_i = 1 / (i + 1)^2, where i = 1, 2, ... , n;
+	* @param n positive integer
 	*/
 	public static void printResult (long n) {
 		n = n == 0 ? 1 : n;
