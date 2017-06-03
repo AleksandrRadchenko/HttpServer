@@ -5,7 +5,6 @@ package javase01.t01;
 * Prints this number and all elements a_i, where i = 1, 2, ..., n.
 * a_n = 1 / (n + 1)^2, M : a_n < E.
 * @param args E - positive real number
-* @exception Nothing
 */
 
 public class Task02 {
@@ -19,7 +18,7 @@ public class Task02 {
 	* @return double args[0] if it parses to double
 	*/
 
-	static double checkArgs(String[] args) {
+	public static double checkArgs(String[] args) {
 		if (args.length == 0) {
 			System.out.println("Please, provide correct epsilon argument");
 			System.exit(0);
@@ -41,19 +40,18 @@ public class Task02 {
 
 	/**
 	* Calculate n. Algorithm time complexity O(1)
-	* @pararm double E - positive real number
+	* @param E - positive real number
 	* @return long n
 	*/
-	static long calcN (double E) {
+	public static long calcN (double E) {
 		return (long) (1.0/Math.sqrt(E));
 	}
 
 	/**
 	* Prints n and all elements a_i, where i = 1,2,...,n;
-	* @param long n number of the least element, wich satisfies M condition
-	* @return void
+	* @param n number of the least element, wich satisfies M condition
 	*/
-	static void printResult (long n) {
+	public static void printResult (long n) {
 		n = n == 0 ? 1 : n;
 		System.out.printf("Number of the least element, wich satisfies M condition: %d%n", n); 
 		System.out.print("Elements: ");
