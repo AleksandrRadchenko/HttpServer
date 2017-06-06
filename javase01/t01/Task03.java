@@ -3,17 +3,17 @@ package javase01.t01;
 import java.io.*;
 
 public class Task03 {
-	static double a, b, h;
+	private static double a, b, h;
 	public static void main (String[] args) {
 		readDataFromUser();
 		checkInputedData();
-		calcFunctionFValues();
+		//calcFunctionFValues();
 		System.out.printf("a=%f, b=%f, h=%f%n", a, b, h);
 	}
 
-	private static double funcionF() {
-		
-	}
+//	private static double funcionF() {
+//
+//	}
 
 	private static void readDataFromUser() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

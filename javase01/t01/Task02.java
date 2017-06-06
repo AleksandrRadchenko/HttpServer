@@ -1,13 +1,14 @@
 package javase01.t01;
 
 /**
-* Finds the least number of the sequence elements, wich satisfies M condition. 
+* Finds the least number of the sequence elements, which satisfies M condition.
 * Prints this number and all elements a_i, where i = 1, 2, ..., n.
 * a_n = 1 / (n + 1)^2, M : a_n < E.
-* @param args E - positive real number
+* Accept positive real number E as command line argument.
 */
 
 public class Task02 {
+	private Task02() {}
 	public static void main (String[] args) {
 		printResult(calcN(checkArgs(args)));
 	}
@@ -18,7 +19,7 @@ public class Task02 {
 	* @return double contents of args[0] if it parses to double
 	*/
 
-	public static double checkArgs(String[] args) {
+	private static double checkArgs(String[] args) {
 		if (args.length == 0) {
 			System.out.println("Please, provide correct epsilon argument");
 			System.exit(0);
@@ -43,7 +44,7 @@ public class Task02 {
 	* @param E positive real number
 	* @return long n
 	*/
-	public static long calcN (double E) {
+    private static long calcN (double E) {
 		return (long) (1.0/Math.sqrt(E));
 	}
 
@@ -51,9 +52,9 @@ public class Task02 {
 	* Prints n and all elements a_i = 1 / (i + 1)^2, where i = 1, 2, ... , n;
 	* @param n positive integer
 	*/
-	public static void printResult (long n) {
+    private static void printResult (long n) {
 		n = n == 0 ? 1 : n;
-		System.out.printf("Number of the least element, wich satisfies M condition: %d%n", n); 
+		System.out.printf("Number of the least element, wich satisfies M condition: %d%n", n);
 		System.out.print("Elements: ");
 		for (int i = 1; i < n; i++) {
 			System.out.printf("a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
