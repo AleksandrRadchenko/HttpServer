@@ -1,19 +1,23 @@
 package javase01.t01;
 
 import java.io.*;
+import java.util.*;
 
 public class Task03 {
-	private static double a, b, h;
+	private static final double a, b, h;
+	Map resultMap = new HashMap<Double, Double>();
 	public static void main (String[] args) {
 		readDataFromUser();
 		checkInputedData();
-		//calcFunctionFValues();
+		calcFunctionFValues();
 		System.out.printf("a=%f, b=%f, h=%f%n", a, b, h);
 	}
+	static void calcFunctionFValues() {
 
-//	private static double funcionF() {
-//
-//	}
+	}
+	private static double funcionF(double x) {
+		return Math.tan(2 * x) + 3;
+	}
 
 	private static void readDataFromUser() {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
