@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class Task03 {
-	private static final double a, b, h;
+	private static double a, b, h;
 	Map resultMap = new HashMap<Double, Double>();
 	public static void main (String[] args) {
 		readDataFromUser();

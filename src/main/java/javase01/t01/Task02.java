@@ -9,7 +9,13 @@ package javase01.t01;
 
 public class Task02 {
 	private Task02() {}
-	public static void main (String[] args) {
+
+	public static void main(String[] args) {
+		String[] args_temp = {""};
+		printResult(calcN(checkArgs(args_temp)));
+	}
+
+	public static void	printN (String[] args) {
 		printResult(calcN(checkArgs(args)));
 	}
 
@@ -18,7 +24,6 @@ public class Task02 {
 	* @param args args[0] should be positive real number
 	* @return double contents of args[0] if it parses to double
 	*/
-
 	private static double checkArgs(String[] args) {
 		if (args.length == 0) {
 			System.out.println("Please, provide correct epsilon argument");
@@ -29,13 +34,14 @@ public class Task02 {
 			result = Double.parseDouble(args[0]);
 			if (result < Double.MIN_VALUE) {
 				System.out.println("Epsilon should be positive double");
-				System.exit(0);
+//				System.exit(0);
 			}
+			System.out.printf("E=%f%n", result);
+			return result;
 		} catch (NumberFormatException e) {
 			System.out.println("Epsilon should be positive double (NumberFormatException)");
-			System.exit(0);
+//			System.exit(0);
 		}
-		System.out.printf("E=%f%n", result); 
 		return result;
 	}
 
@@ -54,7 +60,7 @@ public class Task02 {
 	*/
     private static void printResult (long n) {
 		n = n == 0 ? 1 : n;
-		System.out.printf("Number of the least element, wich satisfies M condition: %d%n", n);
+		System.out.printf("Number of the least element, which satisfies M condition: %d%n", n);
 		System.out.print("Elements: ");
 		for (int i = 1; i < n; i++) {
 			System.out.printf("a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
