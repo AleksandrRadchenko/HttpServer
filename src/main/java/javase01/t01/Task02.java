@@ -17,7 +17,7 @@ public class Task02 {
 //		printResult(calcN(checkArgs(args_temp)));
 //	}
 
-	public static void	printN (String[] args) {
+	public static void calcAndPrintN(String[] args) {
 		printResult(calcN(checkArgs(args)));
 	}
 
