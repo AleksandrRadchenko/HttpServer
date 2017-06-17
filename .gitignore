@@ -4,6 +4,5 @@ out
 docs
 *.swp
 *.iml
-/gradlew
-/gradlew.bat
 /.gradle/
+build

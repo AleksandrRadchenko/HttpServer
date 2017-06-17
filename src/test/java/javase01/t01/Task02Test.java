@@ -4,6 +4,8 @@ package javase01.t01;
 import org.junit.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.security.InvalidParameterException;
+
 import static org.junit.Assert.assertEquals;
 
 //import static org.junit.jupiter.api.Assertions.*;
@@ -40,12 +42,23 @@ public class Task02Test {
         Task02.printN(args);
         assertEquals(expectedOutput, outContent.toString());
     }
-    @Test
-    public void printWithNoArgs() {
-        String[] args = {""};
-        String expectedOutput = String.format("%s%n", "Epsilon should be positive double (NumberFormatException)");
+
+    @Test(expected = NumberFormatException.class)
+    public void notParsableArgs() {
+        String[] args = {"asd"};
         Task02.printN(args);
-        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void printWithNoArgs() {
+        String[] args = {};
+        Task02.printN(args);
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void negativeArgs() {
+        String[] args = {"-5"};
+        Task02.printN(args);
     }
 
 }

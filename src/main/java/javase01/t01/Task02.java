@@ -1,7 +1,9 @@
 package javase01.t01;
 
+import java.security.InvalidParameterException;
+
 /**
-* Finds the least number of the sequence elements, which satisfies M condition.
+* Finds the least number (n) of the sequence of elements, which satisfies M condition.
 * Prints this number and all elements a_i, where i = 1, 2, ..., n.
 * a_n = 1 / (n + 1)^2, M : a_n < E.
 * Accept positive real number E as command line argument.
@@ -10,39 +12,38 @@ package javase01.t01;
 public class Task02 {
 	private Task02() {}
 
-	public static void main(String[] args) {
-		String[] args_temp = {""};
-		printResult(calcN(checkArgs(args_temp)));
-	}
+//	public static void main(String[] args) {
+//		String[] args_temp = {""};
+//		printResult(calcN(checkArgs(args_temp)));
+//	}
 
 	public static void	printN (String[] args) {
 		printResult(calcN(checkArgs(args)));
 	}
 
-	/**
-	* Checks whether args contain acceptable E. Stops execution in any other case.
-	* @param args args[0] should be positive real number
-	* @return double contents of args[0] if it parses to double
-	*/
-	private static double checkArgs(String[] args) {
+    /**
+     * Checks whether args contain acceptable E.
+     *
+     * @param args args[0] should be positive real number.
+     * @return contents of args[0] in form of double.
+     * @throws InvalidParameterException if empty or non-positive number is provided.
+     * @throws NumberFormatException if args can't be parsed.
+     */
+    private static double checkArgs(String[] args) throws InvalidParameterException, NumberFormatException {
 		if (args.length == 0) {
-			System.out.println("Please, provide correct epsilon argument");
-			System.exit(0);
+			throw new InvalidParameterException("Please, provide correct epsilon argument");
 		}
 		double result = 0.0d;
 		try {
 			result = Double.parseDouble(args[0]);
 			if (result < Double.MIN_VALUE) {
-				System.out.println("Epsilon should be positive double");
-//				System.exit(0);
+				throw new InvalidParameterException("Epsilon should be positive double");
 			}
 			System.out.printf("E=%f%n", result);
 			return result;
 		} catch (NumberFormatException e) {
-			System.out.println("Epsilon should be positive double (NumberFormatException)");
-//			System.exit(0);
+			throw new NumberFormatException("Epsilon should be positive double");
 		}
-		return result;
 	}
 
 	/**
