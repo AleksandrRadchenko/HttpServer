@@ -1,7 +1,7 @@
 # EPAM JavaSchool home work 2017.06.01
 [ ![Codeship Status for Alsturm/JavaSchool](https://app.codeship.com/projects/393ada40-3672-0135-1e05-4ad2f5be4eb7/status?branch=master)](https://app.codeship.com/projects/227204)
-# Please run corresponding /src/.sh or /src/.bat file to compile and execute TaskXX, where XX is task number.
-# To execute .sh file as .bat files under Windows OS use: cmd < file.sh under /src directory, or run corresponding .bat file if present.
+Please run corresponding /src/.sh or /src/.bat file to compile and execute TaskXX, where XX is task number.
+To execute .sh file as .bat files under Windows OS use: cmd < file.sh under /src directory, or run corresponding .bat file if present.
 
 170618
 
