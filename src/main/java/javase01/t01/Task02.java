@@ -13,12 +13,12 @@ import java.util.Locale;
 public class Task02 {
 	private Task02() {}
 
-	public static void main(String[] args) {
-		String[] args_temp = {"0.003"};
-		printResult(calcN(checkArgs(args_temp)));
-	}
-
-	public static void calcAndPrintN(String[] args) {
+	/**
+	 * Calculates and prints n and all a_i.
+	 * @param args String[] representation of E.
+	 */
+	@SuppressWarnings("WeakerAccess")
+    public static void calcAndPrintN(String[] args) {
 		printResult(calcN(checkArgs(args)));
 	}
 
@@ -34,13 +34,14 @@ public class Task02 {
 		if (args.length == 0) {
 			throw new InvalidParameterException("Please, provide correct epsilon argument");
 		}
-		double result = 0.0d;
+		double result;// = 0.0d;
 		try {
 			result = Double.parseDouble(args[0]);
 			if (result < Double.MIN_VALUE) {
 				throw new InvalidParameterException("Epsilon should be positive double");
 			}
-			System.out.printf("E=%f%n", result);
+			Locale ruLocale = new Locale("ru");
+			System.out.printf(ruLocale, "E=%f%n", result);
 			return result;
 		} catch (NumberFormatException e) {
 			throw new NumberFormatException("Epsilon should be positive double");
@@ -62,13 +63,12 @@ public class Task02 {
 	*/
     private static void printResult (long n) {
 		n = n == 0 ? 1 : n;
-		System.out.printf("Number of the least element, which satisfies M condition: %d%n", n);
-		System.out.print("Elements: ");
 		Locale ruLocale = new Locale("ru");
+		System.out.printf(ruLocale, "Number of the least element, which satisfies M condition: %d%n", n);
+		System.out.print("Elements: ");
 		for (int i = 1; i < n; i++) {
 			System.out.printf(ruLocale, "a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
 		}
-		System.out.printf(ruLocale,"a_%d=%f", n, 1/Math.pow(n + 1, 2));
-		System.out.println();
+		System.out.printf(ruLocale,"a_%d=%f%n", n, 1/Math.pow(n + 1, 2));
 	}
 }

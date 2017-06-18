@@ -1,14 +1,11 @@
 package javase01.t01;
 
-//import org.junit.jupiter.api.Test;
 import org.junit.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.security.InvalidParameterException;
 
 import static org.junit.Assert.assertEquals;
-
-//import static org.junit.jupiter.api.Assertions.*;
 
 public class Task02Test {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -22,8 +19,9 @@ public class Task02Test {
         System.setOut(null);
     }
 
+    //Testing normal output
     @Test
-    public void printNof0_02() {
+    public void normalRunFrom0_02() {
         String[] args = {"0.02"};
         String expectedOutput = String.format("%s%n%s%n%s%n", "E=0,020000",
                 "Number of the least element, which satisfies M condition: 7",
@@ -39,7 +37,7 @@ public class Task02Test {
     }
 
     @Test(expected = InvalidParameterException.class)
-    public void printWithNoArgs() {
+    public void NoArgs() {
         String[] args = {};
         Task02.calcAndPrintN(args);
     }
@@ -48,6 +46,28 @@ public class Task02Test {
     public void negativeArgs() {
         String[] args = {"-5"};
         Task02.calcAndPrintN(args);
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void negativeInfArgs() {
+        String[] args = {"-Infinity"};
+        Task02.calcAndPrintN(args);
+    }
+
+    @Test(expected = InvalidParameterException.class)
+    public void zeroArgs() {
+        String[] args = {"0"};
+        Task02.calcAndPrintN(args);
+    }
+
+    @Test
+    public void infinityArgs() {
+        String[] args = {"Infinity"};
+        String expectedOutput = String.format("%s%n%s%n%s%n", "E=Infinity",
+                "Number of the least element, which satisfies M condition: 1",
+                "Elements: a_1=0,250000");
+        Task02.calcAndPrintN(args);
+        assertEquals(expectedOutput, outContent.toString());
     }
 
 }
