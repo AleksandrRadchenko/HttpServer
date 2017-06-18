@@ -1,47 +1,26 @@
 package javase01.t01;
 
-import java.io.*;
+import static java.lang.Math.*;
 import java.util.*;
 
+@SuppressWarnings("WeakerAccess")
 public class Task03 {
-	private static double a, b, h;
-	Map resultMap = new HashMap<Double, Double>();
-	public static void main (String[] args) {
-		readDataFromUser();
-		checkInputedData();
-		calcFunctionFValues();
-		System.out.printf("a=%f, b=%f, h=%f%n", a, b, h);
-	}
-	static void calcFunctionFValues() {
+    @SuppressWarnings("WeakerAccess")
+    public void printAsTable(Map<Double, Double> map) {
+        for (Map.Entry<Double, Double> entry : map.entrySet()) {
+            System.out.printf(new Locale("ru"), "%f | %f%n", entry.getKey(), entry.getValue());
+        }
+    }
 
-	}
-	private static double funcionF(double x) {
-		return Math.tan(2 * x) + 3;
-	}
-
-	private static void readDataFromUser() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			System.out.printf("Please, enter a: ");
-			a = Double.parseDouble(br.readLine());
-			System.out.printf("Please, enter b: ");
-			b = Double.parseDouble(br.readLine());
-			System.out.printf("Please, enter h: ");
-			h = Double.parseDouble(br.readLine());
-		} catch (IOException e) {
-			System.out.printf("%nIOexception is thrown. Do smth :) %nError: %s%n", e);
-			System.exit(0);
-		} catch (NumberFormatException|NullPointerException e) {
-			System.out.printf("%nYou should enter real number.%nError: %s%n", e);
-			System.exit(0);
-		}
-	}
-	
-	private static void checkInputedData() {
-		if (!(a < b && h > 0)) {
-			System.out.printf("%nPlease, review arguments. Should be a < b and h > 0.%n");
-			System.exit(0);
-		}
-	}
-
+    @SuppressWarnings("WeakerAccess")
+    public Map<Double, Double> F(double a, double b, double h) throws IllegalArgumentException {
+        if (!(a < b && h > 0)) {
+            throw new IllegalArgumentException("Please, review arguments. Should be a < b and h > 0.");
+        }
+        Map<Double, Double> f = new TreeMap<>();
+            for (double i = a; i <= b; i += h) {
+                f.put(i, Math.tan(2 * i) - 3);
+            }
+        return f;
+    }
 }
