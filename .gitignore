@@ -6,3 +6,6 @@ docs
 *.iml
 /.gradle/
 build
+/gradlew
+/gradle/
+/gradlew.bat

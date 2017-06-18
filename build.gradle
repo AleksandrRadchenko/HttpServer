@@ -11,11 +11,10 @@ repositories {
 }
 
 dependencies {
-//    compileOnly 'org.projectlombok:lombok:+'
+    compileOnly 'org.projectlombok:lombok:+'
     testCompile 'junit:junit:+'
-//    testCompile 'org.junit.jupiter:junit-jupiter-api:+'
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4'
 }
