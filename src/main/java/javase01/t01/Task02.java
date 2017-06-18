@@ -1,6 +1,7 @@
 package javase01.t01;
 
 import java.security.InvalidParameterException;
+import java.util.Locale;
 
 /**
 * Finds the least number (n) of the sequence of elements, which satisfies M condition.
@@ -12,10 +13,10 @@ import java.security.InvalidParameterException;
 public class Task02 {
 	private Task02() {}
 
-//	public static void main(String[] args) {
-//		String[] args_temp = {""};
-//		printResult(calcN(checkArgs(args_temp)));
-//	}
+	public static void main(String[] args) {
+		String[] args_temp = {"0.003"};
+		printResult(calcN(checkArgs(args_temp)));
+	}
 
 	public static void calcAndPrintN(String[] args) {
 		printResult(calcN(checkArgs(args)));
@@ -63,10 +64,11 @@ public class Task02 {
 		n = n == 0 ? 1 : n;
 		System.out.printf("Number of the least element, which satisfies M condition: %d%n", n);
 		System.out.print("Elements: ");
+		Locale ruLocale = new Locale("ru");
 		for (int i = 1; i < n; i++) {
-			System.out.printf("a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
+			System.out.printf(ruLocale, "a_%d=%f, ", i, 1/Math.pow(i + 1, 2));
 		}
-		System.out.printf("a_%d=%f", n, 1/Math.pow(n + 1, 2));
+		System.out.printf(ruLocale,"a_%d=%f", n, 1/Math.pow(n + 1, 2));
 		System.out.println();
 	}
 }
