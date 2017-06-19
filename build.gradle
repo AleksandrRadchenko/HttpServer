@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    //compileOnly 'org.projectlombok:lombok:+'
+    compileOnly 'org.projectlombok:lombok:+'
     testCompile 'junit:junit:+'
 }
 
