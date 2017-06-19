@@ -1,0 +1,18 @@
+#!/bin/bash
+# Allows using different Gradle versions with http://codeship.io
+#
+# As @altfatterz points out below this isn't necessary if you choose to check in your .gradle and gradlew.bat/gradlew.sh files.
+#   I prefer not to check-in the generated files so I set this up.
+#
+# We update the path here instead of via the environment variables because you cannot control the order
+#  that environment variables are set in the Environment tab, and this results in the path NOT having the version number
+#  see test_commands for info on how to run gradle without settings the path here if you want to avoid it.
+#
+# Codeship defaults to jdk7, so you may also want to run the following command to switch to jdk8
+# jdk_switcher use oraclejdk8
+
+PATH=$GRADLE_HOME/bin:$PATH
+
+wget -N $GRADLE_URL
+mkdir -p ~/gradle
+unzip $GRADLE.zip -d ~

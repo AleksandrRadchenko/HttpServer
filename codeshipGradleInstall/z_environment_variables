@@ -1,0 +1,6 @@
+# We set the GRADLE_VERSION as its own environment variable here as it gets referenced in two places.
+#  This allows us to easily upgrade our gradle version. (Tested going from 2.1 to 3.1)
+GRADLE_VERSION=4.0
+GRADLE_HOME=/home/rof/gradle-$GRADLE_VERSION
+GRADLE=gradle-$GRADLE_VERSION-bin
+GRADLE_URL=https://services.gradle.org/distributions/$GRADLE.zip

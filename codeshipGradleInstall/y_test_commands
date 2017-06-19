@@ -1,0 +1,5 @@
+#!/bin/bash
+# If you don't want to update the path as part of the setup commands you can instead call gralde using:
+# $GRADLE_HOME/bin/gradle check --info
+# I prefer to update the path and simplify the 
+gradle check --info
