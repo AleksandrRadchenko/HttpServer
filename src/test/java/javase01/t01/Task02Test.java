@@ -16,7 +16,7 @@ public class Task02Test {
     }
     @After
     public void cleanUpStreams() {
-        System.setOut(null);
+        System.setOut(System.out);
     }
 
     //Testing normal output

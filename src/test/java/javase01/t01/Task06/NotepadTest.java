@@ -71,12 +71,11 @@ public class NotepadTest {
         assertEquals(true, notepad.editRecord(1, record));
     }
 
-//    TODO: NPE while printing ot System.out.
-//    @Test
-//    public void showAllRecords() {
-//        Notepad notepad = new Notepad();
-//        addTwoRecords(notepad);
-//        notepad.showAllRecords();
-//    }
+    @Test
+    public void showAllRecords() {
+        Notepad notepad = new Notepad();
+        addTwoRecords(notepad);
+        notepad.showAllRecords();
+    }
 
 }
