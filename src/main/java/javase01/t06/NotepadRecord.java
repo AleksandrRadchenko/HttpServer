@@ -1,4 +1,4 @@
-package javase01.t01.Task06;
+package javase01.t06;
 
 import lombok.Data;
 

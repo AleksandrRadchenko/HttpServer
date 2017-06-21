@@ -1,4 +1,4 @@
-package javase01.t01;
+package javase01.t02;
 
 import java.security.InvalidParameterException;
 import java.util.Locale;
@@ -10,6 +10,7 @@ import java.util.Locale;
 * Accept positive real number E as command line argument.
 */
 
+@SuppressWarnings("WeakerAccess")
 public class Task02 {
 	private Task02() {}
 

@@ -1,4 +1,4 @@
-package javase01.t01;
+package javase01.t03;
 
 import static org.junit.Assert.*;
 import static java.lang.Math.*;

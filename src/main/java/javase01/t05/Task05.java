@@ -1,7 +1,8 @@
-package javase01.t01;
+package javase01.t05;
 
 import java.util.Locale;
 
+@SuppressWarnings("WeakerAccess")
 public class Task05 {
     /**
      * Prints two-diagonal square matrix with 1 on diagonals.

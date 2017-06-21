@@ -1,10 +1,11 @@
-package javase01.t01.Task06;
+package javase01.t06;
 
 import java.util.Locale;
 
 /**
  * Implements basic notepad with abilities to add, edit, remove and printAll records.
  */
+@SuppressWarnings("WeakerAccess")
 public class Notepad {
     private static final int initialArrayLength = 3;
     private NotepadRecord[] notepadRecords = new NotepadRecord[initialArrayLength];
@@ -56,6 +57,7 @@ public class Notepad {
      * Prints all records to System.out in form of table "Rec [index]: 'record's text'".
      * @return true if printing succeeded.
      */
+    @SuppressWarnings("WeakerAccess")
     public boolean showAllRecords() {
         for (int i = 0; i < recordsCounter; i++) {
             System.out.printf(new Locale("ru"), "Rec %d: %s%n", i, notepadRecords[i].getText());

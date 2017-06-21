@@ -1,4 +1,4 @@
-package javase01.t01;
+package javase01.t04;
 
 @SuppressWarnings("WeakerAccess")
 public class Task04 {
