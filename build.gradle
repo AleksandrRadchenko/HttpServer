@@ -13,8 +13,10 @@ subprojects {
 
     dependencies {
         compileOnly 'org.projectlombok:lombok:+'
-        testCompile 'org.junit.jupiter:junit-jupiter-api:+',
-                'org.hamcrest:java-hamcrest:+'
+        testCompile 'junit:junit:+'
+//                'org.junit.jupiter:junit-jupiter-api:+',
+//                'org.hamcrest:java-hamcrest:+'
+
     }
 
 }
