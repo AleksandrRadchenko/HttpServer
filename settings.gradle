@@ -1,5 +1,5 @@
 rootProject.name = 'JavaSchool'
 
-include 'javasse01',
-        'javasse02',
+include 'javase01',
+        'javase02',
         'other'
