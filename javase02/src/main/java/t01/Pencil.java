@@ -1,17 +1,16 @@
 package t01;
 
-
 import java.math.BigDecimal;
 
-public class Pen extends OfficeSupply {
-    public Pen(String name, BigDecimal price) {
+public class Pencil extends OfficeSupply {
+    public Pencil(String name, BigDecimal price) {
         super(name, price);
     }
 
     public boolean equals(Object o) {
         if (o == this) return true;
         //noinspection SimplifiableIfStatement
-        if (!(o instanceof Pen)) return false;
+        if (!(o instanceof Pencil)) return false;
         return super.equals(o);
     }
 
@@ -23,7 +22,7 @@ public class Pen extends OfficeSupply {
     }
 
     public String toString() {
-        return "Pen(name=" + this.getName() + ", price=" + this.getPrice() + ")";
+        return "Pencil(name=" + this.getName() + ", price=" + this.getPrice() + ")";
     }
 
 }
