@@ -26,4 +26,8 @@ public class Pen extends OfficeSupply {
         return "Pen(name=" + this.getName() + ", price=" + this.getPrice() + ")";
     }
 
+    @Override
+    public Pen clone() {
+        return  (Pen) super.clone();
+    }
 }

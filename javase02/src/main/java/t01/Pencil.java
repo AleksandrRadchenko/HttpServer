@@ -25,4 +25,8 @@ public class Pencil extends OfficeSupply {
         return "Pencil(name=" + this.getName() + ", price=" + this.getPrice() + ")";
     }
 
+    @Override
+    public Pencil clone() {
+        return  (Pencil) super.clone();
+    }
 }

@@ -2,13 +2,16 @@ package t01;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class OfficeSuppliesTest {
     private Pen p1, p2LikePen1, p3, p4;
     private Pencil pencil1, pencilLikePen1, pencilLikePencil1;
+    private Eraser e1, e2;
 
     @Before
     public void createFewPens() {
@@ -19,6 +22,8 @@ public class OfficeSuppliesTest {
         pencil1 = new Pencil("Pencil1", new BigDecimal(3));
         pencilLikePencil1 = new Pencil("Pencil1", new BigDecimal(3));
         pencilLikePen1 = new Pencil("Pen1", new BigDecimal(10));
+        e1 = new Eraser("Bic", new BigDecimal(3));
+        e2 = new Eraser("Bic", new BigDecimal(4));
     }
 
     @Test
@@ -48,11 +53,13 @@ public class OfficeSuppliesTest {
         }
     }
 
+    @SuppressWarnings({"EqualsBetweenInconvertibleTypes"})
     @Test
     public void penNotEqualsPencil() throws Exception {
-        if (p1 != null)
-        assertFalse(p1.equals(pencil1));
-        assertFalse(p1.equals(pencilLikePen1));
+        if (p1 != null) {
+            assertFalse(p1.equals(pencil1));
+            assertFalse(p1.equals(pencilLikePen1));
+        }
     }
 
     @Test
@@ -83,4 +90,22 @@ public class OfficeSuppliesTest {
         assertTrue("Pencil(name=Pencil1, price=3)".equals(pencil1.toString()));
     }
 
+    @Test
+    public void eraserClone() throws Exception {
+        Eraser clonedEraser = e1.clone();
+        assertTrue(e1.equals(clonedEraser));
+        assertFalse(e1 == clonedEraser);
+    }
+    @Test
+    public void penClone() throws Exception {
+        Pen clonedPen = p1.clone();
+        assertTrue(p1.equals(clonedPen));
+        assertFalse(p1 == clonedPen);
+    }
+    @Test
+    public void pencilClone() throws Exception {
+        Pencil clonedPencil = pencil1.clone();
+        assertTrue(pencil1.equals(clonedPencil));
+        assertFalse(pencil1 == clonedPencil);
+    }
 }

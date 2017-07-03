@@ -9,11 +9,9 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by ara on 03.07.2017.
- */
+
 public class EmployeeTest {
-    Employee e1;
+    private Employee e1;
 
     @Before
     public void creatingEmpoyee() throws Exception {
@@ -42,8 +40,33 @@ public class EmployeeTest {
 
     @Test(expected = NullPointerException.class)
     public void cantAddNullSupply() throws Exception {
-        Pen nullPen = null;
-        e1.addSupply(nullPen);
+        e1.addSupply(null);
+    }
+
+    @Test
+    public void removeSupply() throws Exception {
+        int oldSize = e1.getSupplies().size();
+        e1.removeSupply("Luch");
+        assertTrue(e1.getSupplies().size() == oldSize - 1);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void cantRemoveNullSupply() throws Exception {
+        e1.removeSupply(null);
+    }
+
+    @Test
+    public void removeSupplyWithNoName() throws Exception {
+        int oldSize = e1.getSupplies().size();
+        e1.removeSupply("");
+        assertTrue(e1.getSupplies().size() == oldSize);
+    }
+
+    @Test
+    public void removeNonExistentSupply() throws Exception {
+        int oldSize = e1.getSupplies().size();
+        e1.removeSupply("asdjh4@kjh3h58&611kjhs");
+        assertTrue(e1.getSupplies().size() == oldSize);
     }
 
     @Test

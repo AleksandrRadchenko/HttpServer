@@ -24,4 +24,9 @@ public class Eraser extends OfficeSupply {
     public String toString() {
         return "Eraser(name=" + this.getName() + ", price=" + this.getPrice() + ")";
     }
+
+    @Override
+    public Eraser clone() {
+        return  (Eraser) super.clone();
+    }
 }

@@ -1,26 +1,47 @@
 package t02;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 import t01.OfficeSupply;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+/**
+ * Contains name of employee and ArrayList of his/her office supplies
+ */
 @Getter
 @EqualsAndHashCode
-@AllArgsConstructor
 public class Employee {
     private String name;
     private ArrayList<OfficeSupply> supplies;
 
+    @SuppressWarnings({"WeakerAccess", "unchecked"})
+    public Employee(String name, ArrayList<OfficeSupply> supplies) {
+        this.name = name;
+        this.supplies = (ArrayList<OfficeSupply>) supplies.clone();
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public void addSupply(@NonNull OfficeSupply supply) {
         this.getSupplies().add(supply);
     }
 
     /**
-     * Calculates cost of all office supplies of this employee
+     * Removes the first Office supply with the given name.
+     * @param supplyName NonNull String
+     */
+    @SuppressWarnings("WeakerAccess")
+    public void removeSupply(@NonNull String supplyName) {
+        this.getSupplies().removeIf(supply -> supplyName.equals(supply.getName()));
+    }
+
+    /**
+     * Calculates cost of all office supplies for this employee
      * @return BigDecimal
      */
+    @SuppressWarnings("WeakerAccess")
     public BigDecimal calcSuppliesCost() {
         BigDecimal cost = new BigDecimal(0);
         if (this.getSupplies() != null) {
