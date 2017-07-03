@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
-public class OfficeSupplyTest {
+public class OfficeSuppliesTest {
     private Pen p1, p2LikePen1, p3, p4;
     private Pencil pencil1, pencilLikePen1, pencilLikePencil1;
 
