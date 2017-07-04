@@ -28,14 +28,6 @@ public class OfficeSuppliesAccounterTest {
         supplies.add(new Eraser("Bic", new BigDecimal(3)));
         e2 = new Employee(name, supplies);
         employeeWithNoSupplies = new Employee("Vanya", null);
-        osa.addEmployee(e1);
-    }
-
-    @Test
-    public void addEmployee() throws Exception {
-        int employeesListSize = osa.getEmployees().size();
-        osa.addEmployee(e1);
-        assertTrue(employeesListSize == osa.getEmployees().size() - 1);
     }
 
     @Test
