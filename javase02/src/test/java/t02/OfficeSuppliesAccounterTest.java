@@ -43,6 +43,19 @@ public class OfficeSuppliesAccounterTest {
         assertTrue(suppliesCost.equals(new BigDecimal(0)));
     }
 
+    @Test
+    public void createEployeeWithNewbeeSet() throws Exception {
+        Employee newbee = new Employee("Lena", osa.getNewbeeSupplySet());
+        BigDecimal suppliesCost = osa.calcSuppliesCost(newbee);
+        assertTrue(suppliesCost.equals(new BigDecimal("45.50")));
+    }
+
+    @Test
+    public void threeSuppliesInNewbeeSet() throws Exception {
+        ArrayList<OfficeSupply> newbeeSet = osa.getNewbeeSupplySet();
+        assertTrue(newbeeSet.size() == 3);
+    }
+
 
 
 }
