@@ -20,7 +20,7 @@ public class Employee {
     @SuppressWarnings({"WeakerAccess", "unchecked"})
     public Employee(String name, ArrayList<OfficeSupply> supplies) {
         this.name = name;
-        this.supplies = (ArrayList<OfficeSupply>) supplies.clone();
+        this.supplies = supplies == null ? null : (ArrayList<OfficeSupply>) supplies.clone();
     }
 
     @SuppressWarnings("WeakerAccess")
