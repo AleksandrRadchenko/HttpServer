@@ -1,10 +1,14 @@
 package t02;
 
 import lombok.NonNull;
-import t01.*;
+import t01.Eraser;
+import t01.OfficeSupply;
+import t01.Pen;
+import t01.Pencil;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @SuppressWarnings("WeakerAccess")
 public class OfficeSuppliesAccounter {
@@ -14,6 +18,7 @@ public class OfficeSuppliesAccounter {
      * @param employee
      * @return BigDecimal cost. If supplies == null returns new BigDecimal(0).
      */
+    @SuppressWarnings("JavaDoc")
     public BigDecimal calcSuppliesCost(@NonNull Employee employee) {
         return employee.calcSuppliesCost();
     }
@@ -31,5 +36,17 @@ public class OfficeSuppliesAccounter {
         newbeeSupplySet.add(pencil);
         newbeeSupplySet.add(eraser);
         return newbeeSupplySet;
+    }
+
+    public void suppliesSortByName(ArrayList<OfficeSupply> supplies) {
+        supplies.sort(Comparator.comparing(OfficeSupply::getName));
+    }
+
+    public void suppliesSortByPrice(ArrayList<OfficeSupply> supplies) {
+        supplies.sort(Comparator.comparing(OfficeSupply::getPrice));
+    }
+
+    public void suppliesSortByPriceAndName(ArrayList<OfficeSupply> supplies) {
+        supplies.sort(Comparator.comparing(OfficeSupply::getPrice).thenComparing(OfficeSupply::getName));
     }
 }
