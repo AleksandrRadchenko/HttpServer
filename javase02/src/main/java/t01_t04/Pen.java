@@ -1,16 +1,18 @@
-package t01;
+package t01_t04;
+
 
 import java.math.BigDecimal;
 
-public class Eraser extends OfficeSupply {
-    public Eraser(String name, BigDecimal price) {
+public class Pen extends OfficeSupply {
+    @SuppressWarnings("WeakerAccess")
+    public Pen(String name, BigDecimal price) {
         super(name, price);
     }
 
     public boolean equals(Object o) {
         if (o == this) return true;
         //noinspection SimplifiableIfStatement
-        if (!(o instanceof Eraser)) return false;
+        if (!(o instanceof Pen)) return false;
         return super.equals(o);
     }
 
@@ -22,11 +24,11 @@ public class Eraser extends OfficeSupply {
     }
 
     public String toString() {
-        return "Eraser(name=" + this.getName() + ", price=" + this.getPrice() + ")";
+        return "Pen(name=" + this.getName() + ", price=" + this.getPrice() + ")";
     }
 
     @Override
-    public Eraser clone() {
-        return  (Eraser) super.clone();
+    public Pen clone() {
+        return  (Pen) super.clone();
     }
 }

@@ -1,8 +1,7 @@
-package t02;
+package t01_t04;
 
 import org.junit.Before;
 import org.junit.Test;
-import t01.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
