@@ -7,7 +7,7 @@ package t05;
 public enum Discipline {
     HISTORY, LANG, MATH, MUSIC, SPORT;
 
-    public GradeTypes markType() {
+    public GradeTypes getGradeType() {
         switch (this) {
             case HISTORY:
                 return GradeTypes.DECIMAL;

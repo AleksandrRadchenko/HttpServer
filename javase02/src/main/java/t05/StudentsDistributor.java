@@ -19,17 +19,26 @@ public class StudentsDistributor {
      * will be associated with empty List of grades.
      * @param discipline non null enum Discipline.
      * @param student non null Student object.
-     * @return true if added successfully. Returns false if discipline's group contains provided student already.
      */
     @SuppressWarnings("WeakerAccess")
-    public boolean addToGroup(@NonNull Discipline discipline, @NonNull Student student) {
+    public void addStudentToGroup(@NonNull Discipline discipline, @NonNull Student student) {
         if (groups.containsKey(discipline)) {
-            return groups.get(discipline).put(student);
+            groups.get(discipline).put(student);
         } else {
             groups.put(discipline, new StudentGradesMap(student));
-            return true;
         }
     }
+    @SuppressWarnings("WeakerAccess")
+    public void addStudentToGroup(@NonNull Discipline discipline, @NonNull Student student, @NonNull List<Number> grades) {
+        if (groups.containsKey(discipline)) {
+            groups.get(discipline).put(student, grades);
+        } else {
+            groups.put(discipline, new StudentGradesMap(student, grades));
+        }
+    }
+
+
+
 
 
     @SuppressWarnings("WeakerAccess")
@@ -52,5 +61,32 @@ public class StudentsDistributor {
     }
 
 
+    /**
+     * Returns Map which associates discipline with grades list for given student.
+     * @param student
+     * @return
+     */
+    public Map<Discipline, List<Number>> showGradesByGoup(@NonNull Student student) {
+        Map<Discipline, List<Number>> output = new HashMap<>();
+        for (Discipline discipline : Discipline.values()) {
+            if ((groups.containsKey(discipline)) && (groups.get(discipline).containsKey(student)))
+                output.put(discipline, groups.get(discipline).get(student));
+        }
+        return output;
+    }
 
+    public Map<Discipline, Number> showAverageGradesByGroup(@NonNull Student student) {
+        Map<Discipline, Number> output = new HashMap<>();
+        Map<Discipline, List<Number>> gradesByGroup = showGradesByGoup(student);
+        for (Discipline discipline : gradesByGroup.keySet()) {
+            output.put(discipline, averageGrade(discipline, gradesByGroup.get(discipline)));
+        }
+        return output;
+    }
+
+    private double averageGrade(Discipline discipline, List<Number> grades) {
+            double output = 0.0;
+            for (Number n : grades) output += (double) n;
+            return (grades.size() == 0 ? 0 : output / grades.size());
+    }
 }
