@@ -70,7 +70,7 @@ public class StudentTest {
         sd.addToGroup(Discipline.HISTORY, s1);
         ArrayList<Discipline> listForSorting = new ArrayList<>(sd.showAllGroups());
         Collections.sort(listForSorting);
-        assertTrue("[MATH, HISTORY]".equals(listForSorting.toString()));
+        assertTrue("[HISTORY, MATH]".equals(listForSorting.toString()));
     }
 
     @Test
