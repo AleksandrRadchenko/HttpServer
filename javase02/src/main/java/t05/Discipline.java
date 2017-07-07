@@ -2,25 +2,25 @@ package t05;
 
 /**
  * Enum of disciplines. Used to arrange students into groups by discipline.
- * Uses t05.Marks enum to define type (integer or decimal) of marks for every discipline.
+ * Uses t05.GradeTypes enum to define type (integer or decimal) of marks for every discipline.
  */
 public enum Discipline {
-    MATH, LANG, HISTORY, SPORT, MUSIC;
+    HISTORY, LANG, MATH, MUSIC, SPORT;
 
-    public Marks markType() {
+    public GradeTypes markType() {
         switch (this) {
-            case MATH:
-                return Marks.INTEGER;
-            case LANG:
-                return Marks.DECIMAL;
             case HISTORY:
-                return Marks.DECIMAL;
-            case SPORT:
-                return Marks.INTEGER;
+                return GradeTypes.DECIMAL;
+            case LANG:
+                return GradeTypes.DECIMAL;
+            case MATH:
+                return GradeTypes.INTEGER;
             case MUSIC:
-                return Marks.INTEGER;
+                return GradeTypes.INTEGER;
+            case SPORT:
+                return GradeTypes.INTEGER;
             default:
-                return Marks.INTEGER;
+                return GradeTypes.INTEGER;
         }
     }
 }
