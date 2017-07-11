@@ -10,7 +10,8 @@ import java.util.*;
 @SuppressWarnings("WeakerAccess")
 public class StudentsDistributor {
 
-    private HashMap<Discipline, StudentGradesMap> groups = new HashMap<>();
+//    private HashMap<Discipline, StudentGradesMap> groups = new HashMap<>();
+    private EnumMap groups = new EnumMap(Discipline.class);
 
 
     /**
