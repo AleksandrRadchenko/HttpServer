@@ -3,9 +3,7 @@ package t05;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -95,23 +93,28 @@ public class StudentTest {
 
     @Test
     public void showGradesByGoup() throws Exception {
-        String expectedString = "{MATH=[3, 5, 4, 2], HISTORY=[2.3, 3.7, 1.2]}";
-        String actualString = sd1.showGradesByGoup(s1).toString();
+        List<Map.Entry<Discipline, List<Number>>> listForSorting = new ArrayList<>(sd1.showGradesByGoup(s1).entrySet());
+        listForSorting.sort(Comparator.comparing(Map.Entry::getKey));
+        String expectedString = "[HISTORY=[2.3, 3.7, 1.2], MATH=[3, 5, 4, 2]]";
+        String actualString = listForSorting.toString();
             assertTrue(expectedString.equals(actualString));
-        expectedString = "{LANG=[4.6, 4.0, 4.4], HISTORY=[4.7, 4.5, 4.9, 5.0]}";
-        actualString = sd1.showGradesByGoup(s2).toString();
+        listForSorting = new ArrayList<>(sd1.showGradesByGoup(s2).entrySet());
+        listForSorting.sort(Comparator.comparing(Map.Entry::getKey));
+        expectedString = "[HISTORY=[4.7, 4.5, 4.9, 5.0], LANG=[4.6, 4.0, 4.4]]";
+        actualString = listForSorting.toString();
             assertTrue(expectedString.equals(actualString));
         expectedString = "{HISTORY=[1.1, 1.5]}";
         actualString = sd1.showGradesByGoup(s3).toString();
             assertTrue(expectedString.equals(actualString));
-        System.out.println("Student's " + s1.getName() + " grades by groups: " + sd1.showGradesByGoup(s1));
-        System.out.println("Student's " + s2.getName() + " grades by groups: " + sd1.showGradesByGoup(s2));
-        System.out.println("Student's " + s3.getName() + " grades by groups: " + sd1.showGradesByGoup(s3));
     }
 
     @Test
     public void showAverageGradesByGoup() throws Exception {
-        assertTrue("{LANG=4.333333333333333, HISTORY=4.775}".equals(sd1.showAverageGradesByGroup(s2).toString()));
+        List<Map.Entry<Discipline, Number>> listForSorting = new ArrayList<>(sd1.showAverageGradesByGroup(s2).entrySet());
+        listForSorting.sort(Comparator.comparing(Map.Entry::getKey));
+        String expectedString = "[HISTORY=4.775, LANG=4.333333333333333]";
+        String actualString = listForSorting.toString();
+        assertTrue(expectedString.equals(actualString));
     }
 
 
