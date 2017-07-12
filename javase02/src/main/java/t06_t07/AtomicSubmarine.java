@@ -1,5 +1,7 @@
-package t06;
+package t06_t07;
 
+
+@MyAnnotation(version = "1.0.1", createdBy = "Alexander Radchenko")
 @SuppressWarnings("WeakerAccess")
 public class AtomicSubmarine {
     private Engine engine;

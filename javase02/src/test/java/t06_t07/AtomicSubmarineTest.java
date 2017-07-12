@@ -1,4 +1,4 @@
-package t06;
+package t06_t07;
 
 import org.junit.Test;
 
