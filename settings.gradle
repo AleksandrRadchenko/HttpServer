@@ -2,4 +2,5 @@ rootProject.name = 'JavaSchool'
 
 include 'javase01',
         'javase02',
+        'javase03',
         'other'
