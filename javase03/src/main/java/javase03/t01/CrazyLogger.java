@@ -21,9 +21,12 @@ public class CrazyLogger {
     public List<String> search(String searchString){
         String[] rows = sb.toString().split(System.getProperty("line.separator"));
         List<String> filteredRows = new ArrayList<>();
+        //Filtering
         Arrays.asList(rows).forEach(s -> {if (s.contains(searchString)) filteredRows.add(s);});
+        //Printing result to System.out
         System.out.printf("Lines containing \"%s\":%n", searchString);
         filteredRows.forEach(System.out::println);
+
         return filteredRows;
     }
 
