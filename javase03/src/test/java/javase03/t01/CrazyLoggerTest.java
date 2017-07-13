@@ -28,6 +28,6 @@ public class CrazyLoggerTest {
 
     @Test
     public void search() throws Exception {
-        assertTrue(cl.search("asdsad2").length == 3);
+        assertTrue(cl.search("asdsad2").size() == 3);
     }
 }

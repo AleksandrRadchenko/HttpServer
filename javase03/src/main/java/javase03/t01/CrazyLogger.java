@@ -18,11 +18,13 @@ public class CrazyLogger {
     }
 
     @SuppressWarnings("SameParameterValue")
-    public String[] search(String searchString){
+    public List<String> search(String searchString){
         String[] rows = sb.toString().split(System.getProperty("line.separator"));
+        List<String> filteredRows = new ArrayList<>();
+        Arrays.asList(rows).forEach(s -> {if (s.contains(searchString)) filteredRows.add(s);});
         System.out.printf("Lines containing \"%s\":%n", searchString);
-        Arrays.asList(rows).forEach(s -> {if (s.contains(searchString)) System.out.printf("%s%n", s);});
-        return rows;
+        filteredRows.forEach(System.out::println);
+        return filteredRows;
     }
 
     public String printAll() {
