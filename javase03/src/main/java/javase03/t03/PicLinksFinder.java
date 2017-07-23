@@ -22,20 +22,36 @@ public class PicLinksFinder {
     //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
     //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
 
-    // Типы ссылок на рисунки:
-    // рисунке 1
-    // рисунка 17
-    // (рис. 8)
-    // (Рис. 1)
-    // (Рис. 1, 2)
-    // (Рис. 8-б)
-    // (Рис. 8 г,д)
-    // На рисунке (Рис. 14-а)
-    // (Рис. 15,16)
-    // (Рис. 25 и 26)
+//     Типы ссылок на рисунки:
+//     рисунке 1
+//     рисунка 17
+//     (рис. 8)
+//     (Рис. 1)
+//     (Рис. 1, 2)
+//     (Рис. 8-б)
+//     (Рис. 8 г,д)
+//     На рисунке (Рис. 14-а)
+//     (Рис. 15,16)
+//     (Рис. 25 и 26)
+
 
     public List<Integer> getPicLinkNumberFromSentence(@NonNull String sentence) {
+//        List<Integer> picLinkNumbers = Arrays.asList(0);
         List<Integer> picLinkNumbers = new ArrayList<>();
+        Pattern p = Pattern.compile("[Рр]ис[ункеаи.\\s]*?\\d+");
+        Matcher m = p.matcher(sentence);
+        while (m.find()) {
+            String s = sentence.substring(m.start(), m.end());
+            //todo: extract numbers from s
+            picLinkNumbers.add(Integer.parseInt(s));
+            // Looking for second link, if present
+            Pattern patForSecondLink = Pattern.compile("(?<=[^\\d])\\d+");
+            Matcher mForSecondLink = patForSecondLink.matcher(sentence.substring(m.end(), sentence.length()));
+            if (mForSecondLink.find()) {
+                s = sentence.substring(mForSecondLink.start(), mForSecondLink.end());
+                picLinkNumbers.add(Integer.parseInt(s));
+            }
+        }
         return picLinkNumbers;
     }
 
