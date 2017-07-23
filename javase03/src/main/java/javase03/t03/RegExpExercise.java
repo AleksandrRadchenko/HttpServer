@@ -17,18 +17,20 @@ public class RegExpExercise {
 
     public static void main(String[] args) {
         text = readFileToString();
-        // truncating html tags from text we read from file
+        // truncating useless bytes from the beginning of the file
         String valuableText = text.substring(text.indexOf("Мнения ученых"));
-        //TODO: exclude all html tags
-        //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
-        //предложение: [А-Я]([^\.]|(. \d))+\.[^а-яёА-ЯЁ_0-9]
-        //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
-        Pattern p = Pattern.compile("&nbsp;");
+        // Excluding all pictures captions
+        Pattern p = Pattern.compile(">Рис.\\s*?\\d+");
         Matcher m = p.matcher(valuableText);
-        valuableText = m.replaceAll(" ");
-        p = Pattern.compile("<.+>");
+        valuableText = m.replaceAll(">");
+        // Excluding html tags
+        p = Pattern.compile("&nbsp;");
         m = p.matcher(valuableText);
         valuableText = m.replaceAll(" ");
+        p = Pattern.compile("<.*?>");
+        m = p.matcher(valuableText);
+        valuableText = m.replaceAll(" ");
+        // Splitting by sentences
         p = Pattern.compile("[А-Я]([^\\.]|(. \\d))+[\\.][^а-яёА-ЯЁ_0-9]");
         m = p.matcher(valuableText);
         List<String> sentences = new ArrayList<>();
@@ -40,6 +42,10 @@ public class RegExpExercise {
             System.out.println("string: " + s);
         }
     }
+
+    //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
+    //предложение: [А-Я]([^\.]|(. \d))+\.[^а-яёА-ЯЁ_0-9]
+    //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
 
     // Типы ссылок на рисунки:
     // рисунке 1
