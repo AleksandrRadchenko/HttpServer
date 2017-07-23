@@ -18,6 +18,27 @@ public class PicLinksFinder {
 //        readFileToString("javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html");
     }
 
+
+    //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
+    //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
+
+    // Типы ссылок на рисунки:
+    // рисунке 1
+    // рисунка 17
+    // (рис. 8)
+    // (Рис. 1)
+    // (Рис. 1, 2)
+    // (Рис. 8-б)
+    // (Рис. 8 г,д)
+    // На рисунке (Рис. 14-а)
+    // (Рис. 15,16)
+    // (Рис. 25 и 26)
+
+    public List<Integer> getPicLinkNumberFromSentence(@NonNull String sentence) {
+        List<Integer> picLinkNumbers = new ArrayList<>();
+        return picLinkNumbers;
+    }
+
     public List<String> getSentencesWithPicturesLinks(@NonNull String fileName) {
         String text = readFileToString(fileName);
         String valuableText = cleanHtmlTags(text);
@@ -35,8 +56,7 @@ public class PicLinksFinder {
     }
 
     private String cleanHtmlTags(String text) {
-        // truncating useless bytes from the beginning of the file
-        //todo: try withiout it
+        // truncating not valuable bytes from the beginning of the file
         String valuableText = text.substring(text.indexOf("Мнения ученых"));
         // Excluding all pictures captions
         Pattern p = Pattern.compile(">Рис.\\s*?\\d+");
@@ -51,21 +71,6 @@ public class PicLinksFinder {
         valuableText = m.replaceAll(" ");
         return valuableText;
     }
-
-    //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
-    //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
-
-    // Типы ссылок на рисунки:
-    // рисунке 1
-    // рисунка 17
-    // (рис. 8)
-    // (Рис. 1)
-    // (Рис. 1, 2)
-    // (Рис. 8-б)
-    // (Рис. 8 г,д)
-    // На рисунке (Рис. 14-а)
-    // (Рис. 15,16)
-    // (Рис. 25 и 26)
 
     @SneakyThrows
     private static String readFileToString(@NonNull String fileName) {
