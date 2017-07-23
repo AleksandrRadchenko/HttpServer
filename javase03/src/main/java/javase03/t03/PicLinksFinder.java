@@ -43,16 +43,24 @@ public class PicLinksFinder {
         while (m.find()) {
             String s = sentence.substring(m.start(), m.end());
             //todo: extract numbers from s
-            picLinkNumbers.add(Integer.parseInt(s));
+            Integer num = extractNumber(s);
+            if (num != 0)
+                picLinkNumbers.add(num);
             // Looking for second link, if present
-            Pattern patForSecondLink = Pattern.compile("(?<=[^\\d])\\d+");
-            Matcher mForSecondLink = patForSecondLink.matcher(sentence.substring(m.end(), sentence.length()));
-            if (mForSecondLink.find()) {
-                s = sentence.substring(mForSecondLink.start(), mForSecondLink.end());
-                picLinkNumbers.add(Integer.parseInt(s));
-            }
+            num = extractNumber(sentence.substring(m.end() + 1, sentence.length()));
+            if (num != 0)
+                picLinkNumbers.add(num);
         }
         return picLinkNumbers;
+    }
+
+    private Integer extractNumber(String s) {
+        String output = "0";
+        Pattern numberExtractor = Pattern.compile("\\d+");
+        Matcher mForNumberExtractor = numberExtractor.matcher(s);
+        if (mForNumberExtractor.find())
+            output = s.substring(mForNumberExtractor.start(), mForNumberExtractor.end());
+        return Integer.parseInt(output);
     }
 
     public List<String> getSentencesWithPicturesLinks(@NonNull String fileName) {

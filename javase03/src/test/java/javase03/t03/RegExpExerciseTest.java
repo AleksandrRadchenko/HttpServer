@@ -2,6 +2,7 @@ package javase03.t03;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class RegExpExerciseTest {
     private static final String fileName = "src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html";
     private static PicLinksFinder finder = new PicLinksFinder();
     private static List<String> sentences;
-    private static List<Integer> picLinkNumbers;
+    private static List<Integer> picLinkNumbers = new ArrayList<>();
 
 
     @Test
@@ -33,11 +34,15 @@ public class RegExpExerciseTest {
 
     @Test
     public void getAllPicLinkNumbersOrdered() throws Exception {
-        List<Integer> picLinks = Collections.singletonList(Integer.valueOf(0));
+        List<Integer> picLinks = new ArrayList<>();
+        sentences = finder.getSentencesWithPicturesLinks(fileName);
         for (String sentence : sentences) {
             picLinks = finder.getPicLinkNumberFromSentence(sentence);
-            if (picLinks.get(0) != 0) picLinkNumbers.addAll(picLinks);
+            if (picLinks.size() != 0)
+                picLinkNumbers.addAll(picLinks);
         }
+        // TODO: 24.07.2017 remove next line:
+        System.out.println("");
     }
 
 }
