@@ -1,5 +1,6 @@
 package javase03.t03;
 
+import io.vavr.Tuple2;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
@@ -8,7 +9,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +20,10 @@ public class PicLinksFinder {
     public static void main(String[] args) {
 //        readFileToString("javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html");
     }
-
+    Pattern p;
+    Matcher m;
+    // Maps sentences with picture links to the List of these link
+    Map<Integer, Tuple2<String, List<Integer>>> picLinks = new HashMap<>();
 
     //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
     //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
@@ -34,12 +40,46 @@ public class PicLinksFinder {
 //     (Рис. 15,16)
 //     (Рис. 25 и 26)
 
+    /**
+     * Splitting original text from file into sentences and puts them into returned List
+     * @param fileName fully qualified file name to read from.
+     * @return List of Strings with sentences of the original text.
+     */
+
+    /**
+     * Returns mapping of sentence to list of picture links in this sentence.
+     * @param sentences List of Strings to find picture links in.
+     * @return
+     */
+    public Map<String, List<Integer>> getPicLinks(@NonNull List<String> sentences) {
+        List<String> output = new ArrayList<>();
+        List<Integer> picLinkNumbers = new ArrayList<>();
+// If sentence contains link for picture, add this sentence to List output.
+        p = Pattern.compile("(?<=[кс][.еа]\\s)(\\d{1,3})([, и]+(\\d{1,3}))?");
+        for (String sentence : sentences) {
+            // Temporary list to accumulate picture links from current sentence
+            List<Integer> links = new ArrayList<>();
+            m = p.matcher(sentence);
+            while (m.find()) {
+                String group1 = m.group(1);
+                if (group1 != null)
+                    links.add(Integer.parseInt(group1));
+                String group3 = m.group(3);
+                if (group3 != null)
+                    links.add(Integer.parseInt(group3));
+            }
+            String sentenceTrimmed = sentence.trim();
+            picLinks.put(sentenceTrimmed, links);
+
+        }
+        return picLinks;
+    }
 
     public List<Integer> getPicLinkNumberFromSentence(@NonNull String sentence) {
 //        List<Integer> picLinkNumbers = Arrays.asList(0);
         List<Integer> picLinkNumbers = new ArrayList<>();
-        Pattern p = Pattern.compile("[Рр]ис[ункеаи.\\s]*?\\d+");
-        Matcher m = p.matcher(sentence);
+        p = Pattern.compile("(?:[Рр]ис[унокае.\\s]+)\\d{1,3}");
+        m = p.matcher(sentence);
         while (m.find()) {
             String s = sentence.substring(m.start(), m.end());
             //todo: extract numbers from s
@@ -54,27 +94,17 @@ public class PicLinksFinder {
         return picLinkNumbers;
     }
 
-    private Integer extractNumber(String s) {
-        String output = "0";
-        Pattern numberExtractor = Pattern.compile("\\d+");
-        Matcher mForNumberExtractor = numberExtractor.matcher(s);
-        if (mForNumberExtractor.find())
-            output = s.substring(mForNumberExtractor.start(), mForNumberExtractor.end());
-        return Integer.parseInt(output);
-    }
-
-    public List<String> getSentencesWithPicturesLinks(@NonNull String fileName) {
+    public List<String> getSentences(@NonNull String fileName) {
         String text = readFileToString(fileName);
         String valuableText = cleanHtmlTags(text);
         // Splitting by sentences
-        Pattern p = Pattern.compile("[А-ЯЁ][А-ЯЁа-яёa-z\\w\\s\\d\\p{Punct}«»–]*?[!.?]\\s+(?=[А-ЯЁ]|$)");
-        Matcher m = p.matcher(valuableText);
+        p = Pattern.compile("[А-ЯЁ][А-ЯЁа-яёa-z\\w\\s\\d\\p{Punct}«»–]*?[!.?]\\s+(?=[А-ЯЁ]|$)");
+        m = p.matcher(valuableText);
         List<String> sentences = new ArrayList<>();
         String s;
         while (m.find()) {
             s = valuableText.substring(m.start(), m.end() - 1).trim();
             sentences.add(s);
-//            System.out.println("string: " + s);
         }
         return sentences;
     }
@@ -83,8 +113,8 @@ public class PicLinksFinder {
         // truncating not valuable bytes from the beginning of the file
         String valuableText = text.substring(text.indexOf("Мнения ученых"));
         // Excluding all pictures captions
-        Pattern p = Pattern.compile(">Рис.\\s*?\\d+");
-        Matcher m = p.matcher(valuableText);
+        p = Pattern.compile(">Рис.\\s*?\\d+");
+        m = p.matcher(valuableText);
         valuableText = m.replaceAll(">");
         // Excluding html tags
         p = Pattern.compile("&nbsp;");
