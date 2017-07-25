@@ -33,9 +33,10 @@ public class RegExpExerciseTest {
 
     @Before
     public void setUp() throws Exception {
-        testText.add("        В электроне (позитроне) гамма-коллапсары образуют семь гамма-трубок (Рис. 3), в каждой из семи гамма-трубок по семь элементарных Рисунке 34 и рисунка 133 трубок, всего в (Рис. 15,16) (Рис. 25 и 26) электроне (позитроне) 49 элементарных трубок, сорок девятая трубка расположена в центре.".trim());
-        testText.add("                Новое описание истинной структуры ядра атома углерода основано на универсальных свойствах коллапсаров-нуклонов в силовых структурах трёх альф, расположенных в ядерной трубке атома углерода с взаимным относительным смещением на 60 (рис. 8).".trim());
-        testText.add("        Только мощные свободные неэлектростатические – спиновые (сторонние) электрические заряды протонов, в ядрах атома углерода создают силовую кристаллическую структуру графита (Рис. 18), фуллерена (Рис. 22) и алмаза (Рис. 25).".trim());
+        testText.add("        В электроне (позитроне) гамма-коллапсары образуют семь гамма-трубок (Рис. 3), в каждой из семи гамма-трубок по семь элементарных Рисунке 4 и рисунка 5 трубок, всего в (Рис. 15,16) (Рис. 25 и 26) электроне (позитроне) 49 элементарных трубок, сорок девятая трубка расположена в центре.".trim());
+        testText.add("                Новое описание истинной структуры ядра атома углерода основано на универсальных свойствах коллапсаров-нуклонов в силовых структурах трёх альф, расположенных в ядерной трубке атома углерода с взаимным относительным смещением на 60 (рис. 27).".trim());
+        testText.add("        Только мощные свободные неэлектростатические – спиновые (сторонние) электрические заряды протонов, в ядрах атома углерода создают силовую кристаллическую структуру графита (Рис. 28), фуллерена (Рис. 29) и алмаза (Рис. 30).".trim());
+        testText.add("   рисунках 17 и 20  рисунки 21 и 22 рисунков 37, 40".trim());
     }
 
     @Test
@@ -50,14 +51,16 @@ public class RegExpExerciseTest {
     @Test
     public void filterTestText() throws Exception {
         final Map<Integer, Tuple2<String, List<Integer>>> picLinks = finder.getPicLinks(testText);
-        List<Integer> string0Links = new ArrayList<>(Arrays.asList(3, 34, 133, 15, 16, 25, 26));
-        List<Integer> string1Links = new ArrayList<>(Arrays.asList(8));
-        List<Integer> string2Links = new ArrayList<>(Arrays.asList(18, 22, 25));
+        List<Integer> string0Links = new ArrayList<>(Arrays.asList(3, 4, 5, 15, 16, 25, 26));
+        List<Integer> string1Links = new ArrayList<>(Arrays.asList(27));
+        List<Integer> string2Links = new ArrayList<>(Arrays.asList(28, 29, 30));
+        List<Integer> string3Links = new ArrayList<>(Arrays.asList(17, 20, 21, 22, 37, 40));
+        printPicLinks(picLinks);
         assertThat(picLinks.get(0)._2, Is.is(string0Links));
         assertThat(picLinks.get(1)._2, Is.is(string1Links));
         assertThat(picLinks.get(2)._2, Is.is(string2Links));
+        assertThat(picLinks.get(3)._2, Is.is(string3Links));
 
-        printPicLinks(picLinks);
     }
 
     @Test
@@ -65,6 +68,19 @@ public class RegExpExerciseTest {
         sentences = finder.getSentences(fileName);
         final Map<Integer, Tuple2<String, List<Integer>>> picLinks = finder.getPicLinks(sentences);
         printPicLinks(picLinks);
+    }
+
+    @Test
+    public void linksAreSorted() throws Exception {
+        final Map<Integer, Tuple2<String, List<Integer>>> picLinks1 = finder.getPicLinks(testText);
+        assertThat(finder.ifPicLinksSorted(picLinks1), Is.is(true));
+    }
+
+    @Test
+    public void linksAreNotSorted() throws Exception {
+        sentences = finder.getSentences(fileName);
+        final Map<Integer, Tuple2<String, List<Integer>>> picLinks2 = finder.getPicLinks(sentences);
+        assertThat(finder.ifPicLinksSorted(picLinks2), Is.is(false));
     }
 
     @Test

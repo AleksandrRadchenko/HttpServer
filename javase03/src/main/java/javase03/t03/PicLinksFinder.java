@@ -21,13 +21,11 @@ public class PicLinksFinder {
     public static void main(String[] args) {
 //        readFileToString("javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html");
     }
+
     private Pattern p;
     private Matcher m;
-    // Maps sentences with picture links to the List of these link
+    // Maps sentences with picture links --> to the List of these link
     private final Map<Integer, Tuple2<String, List<Integer>>> picLinks = new HashMap<>();
-
-    //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
-    //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
 
 //     Типы ссылок на рисунки:
 //     рисунке 1
@@ -40,8 +38,28 @@ public class PicLinksFinder {
 //     На рисунке (Рис. 14-а)
 //     (Рис. 15,16)
 //     (Рис. 25 и 26)
+// Которые могли бы еще быть:
+//     рисунках 17 и 20
+//     рисунки 17 и 12
+//     рисунков 17, 2
+//     рис. 17 или 2
 
-
+    public boolean ifPicLinksSorted(Map<Integer, Tuple2<String, List<Integer>>> picLinks) {
+        List<Integer> allLinksOrdered = new ArrayList<>();
+        boolean result = true;
+        for (Integer i : picLinks.keySet()) {
+            allLinksOrdered.addAll(picLinks.get(i)._2);
+        }
+        Integer previous = -1;
+        for (Integer integer : allLinksOrdered) {
+            if (previous > integer) {
+                result = false;
+                break;
+            }
+            previous = integer;
+        }
+        return result;
+    }
     /**
      * Returns mapping of sentences to list of picture links in this sentence.
      * @param sentences List of Strings to find picture links in.
@@ -50,11 +68,9 @@ public class PicLinksFinder {
      */
     @SuppressWarnings("WeakerAccess")
     public Map<Integer, Tuple2<String, List<Integer>>> getPicLinks(@NonNull List<String> sentences) {
-        List<String> output = new ArrayList<>();
-        List<Integer> picLinkNumbers = new ArrayList<>();
         int sentenceWithLinksCounter = 0;
-// If sentence contains link for picture, add this sentence to List output.
-        p = Pattern.compile("(?<=[кс][.еа]\\s)(\\d{1,3})([, и]+(\\d{1,3}))?");
+        // Picture link pattern with capturing group for first and second link
+        p = Pattern.compile("(?<=[кс][.аеиоу][вх\\s]\\s?)(\\d{1,3})([, ил]+(\\d{1,3}))?");
         for (String sentence : sentences) {
             // Temporary list to accumulate picture links from current sentence
             List<Integer> links = new ArrayList<>();
@@ -67,14 +83,8 @@ public class PicLinksFinder {
                 if (group3 != null)
                     links.add(Integer.parseInt(group3));
             }
-            if (!links.isEmpty()) {
-                // Check whether we put fot the first time
+            if (!links.isEmpty())
                 picLinks.put(sentenceWithLinksCounter++, Tuple.of(sentence, links));
-//                if (picLinks.keySet().isEmpty()) {
-//                    picLinks.put(0, Tuple.of(sentence, links));
-//                // Incrementing Integer key with each put operation
-//                } else picLinks.put(picLinks.keySet().size(), Tuple.of(sentence, links));
-            }
         }
         return picLinks;
     }
@@ -87,7 +97,7 @@ public class PicLinksFinder {
     public List<String> getSentences(@NonNull String fileName) {
         String text = readFileToString(fileName);
         String valuableText = cleanHtmlTags(text);
-        // Splitting by sentences
+        // Splitting text in sentences
         p = Pattern.compile("[А-ЯЁ][А-ЯЁа-яёa-z\\w\\s\\d\\p{Punct}«»–]*?[!.?]\\s+(?=[А-ЯЁ]|$)");
         m = p.matcher(valuableText);
         List<String> sentences = new ArrayList<>();
