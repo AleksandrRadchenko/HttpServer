@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RegExpExerciseTest {
-    private static final String fileName = "src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html";
+    private static final String fileName = "javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html";
     private static PicLinksFinder finder = new PicLinksFinder();
     private static List<String> sentences;
     private List<String> testText = new ArrayList<>();
