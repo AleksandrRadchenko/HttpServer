@@ -1,5 +1,6 @@
 package javase03.t03;
 
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -20,10 +21,10 @@ public class PicLinksFinder {
     public static void main(String[] args) {
 //        readFileToString("javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html");
     }
-    Pattern p;
-    Matcher m;
+    private Pattern p;
+    private Matcher m;
     // Maps sentences with picture links to the List of these link
-    Map<Integer, Tuple2<String, List<Integer>>> picLinks = new HashMap<>();
+    private final Map<Integer, Tuple2<String, List<Integer>>> picLinks = new HashMap<>();
 
     //Ссылка на рисунок: \s*[^>][Рр]ис[^\d\s]*\s\d+
     //Разбиение на слова: [^а-яёА-ЯЁ_0-9]+
@@ -40,18 +41,15 @@ public class PicLinksFinder {
 //     (Рис. 15,16)
 //     (Рис. 25 и 26)
 
-    /**
-     * Splitting original text from file into sentences and puts them into returned List
-     * @param fileName fully qualified file name to read from.
-     * @return List of Strings with sentences of the original text.
-     */
 
     /**
      * Returns mapping of sentence to list of picture links in this sentence.
      * @param sentences List of Strings to find picture links in.
-     * @return
+     * @return Map with Integer keys (indexes) and Tuple2 of String sentence and
+     * ArrayList of corresponding picture links from that sentence
      */
-    public Map<String, List<Integer>> getPicLinks(@NonNull List<String> sentences) {
+    @SuppressWarnings("WeakerAccess")
+    public Map<Integer, Tuple2<String, List<Integer>>> getPicLinks(@NonNull List<String> sentences) {
         List<String> output = new ArrayList<>();
         List<Integer> picLinkNumbers = new ArrayList<>();
 // If sentence contains link for picture, add this sentence to List output.
@@ -68,32 +66,20 @@ public class PicLinksFinder {
                 if (group3 != null)
                     links.add(Integer.parseInt(group3));
             }
-            String sentenceTrimmed = sentence.trim();
-            picLinks.put(sentenceTrimmed, links);
-
+            // Check whether we put fot the first time
+            if (picLinks.keySet().isEmpty()) {
+                picLinks.put(0, Tuple.of(sentence, links));
+            // Incrementing Integer key with each put operation
+            } else picLinks.put(picLinks.keySet().size(), Tuple.of(sentence, links));
         }
         return picLinks;
     }
 
-    public List<Integer> getPicLinkNumberFromSentence(@NonNull String sentence) {
-//        List<Integer> picLinkNumbers = Arrays.asList(0);
-        List<Integer> picLinkNumbers = new ArrayList<>();
-        p = Pattern.compile("(?:[Рр]ис[унокае.\\s]+)\\d{1,3}");
-        m = p.matcher(sentence);
-        while (m.find()) {
-            String s = sentence.substring(m.start(), m.end());
-            //todo: extract numbers from s
-            Integer num = extractNumber(s);
-            if (num != 0)
-                picLinkNumbers.add(num);
-            // Looking for second link, if present
-            num = extractNumber(sentence.substring(m.end() + 1, sentence.length()));
-            if (num != 0)
-                picLinkNumbers.add(num);
-        }
-        return picLinkNumbers;
-    }
-
+    /**
+     * Splitting original text from file into sentences and puts them into returned List
+     * @param fileName fully qualified file name to read from.
+     * @return List of Strings with sentences of the original text.
+     */
     public List<String> getSentences(@NonNull String fileName) {
         String text = readFileToString(fileName);
         String valuableText = cleanHtmlTags(text);
