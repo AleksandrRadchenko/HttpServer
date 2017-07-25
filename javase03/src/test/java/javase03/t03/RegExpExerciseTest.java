@@ -18,7 +18,6 @@ public class RegExpExerciseTest {
     private static final String fileName = "src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html";
     private static PicLinksFinder finder = new PicLinksFinder();
     private static List<String> sentences;
-    private static List<Integer> picLinkNumbers = new ArrayList<>();
     private List<String> testText = new ArrayList<>();
 
     public void printPicLinks(Map<Integer, Tuple2<String, List<Integer>>> picLinks) {

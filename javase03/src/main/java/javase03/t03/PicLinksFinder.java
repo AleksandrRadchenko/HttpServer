@@ -43,7 +43,7 @@ public class PicLinksFinder {
 
 
     /**
-     * Returns mapping of sentence to list of picture links in this sentence.
+     * Returns mapping of sentences to list of picture links in this sentence.
      * @param sentences List of Strings to find picture links in.
      * @return Map with Integer keys (indexes) and Tuple2 of String sentence and
      * ArrayList of corresponding picture links from that sentence
@@ -52,6 +52,7 @@ public class PicLinksFinder {
     public Map<Integer, Tuple2<String, List<Integer>>> getPicLinks(@NonNull List<String> sentences) {
         List<String> output = new ArrayList<>();
         List<Integer> picLinkNumbers = new ArrayList<>();
+        int sentenceWithLinksCounter = 0;
 // If sentence contains link for picture, add this sentence to List output.
         p = Pattern.compile("(?<=[кс][.еа]\\s)(\\d{1,3})([, и]+(\\d{1,3}))?");
         for (String sentence : sentences) {
@@ -66,11 +67,14 @@ public class PicLinksFinder {
                 if (group3 != null)
                     links.add(Integer.parseInt(group3));
             }
-            // Check whether we put fot the first time
-            if (picLinks.keySet().isEmpty()) {
-                picLinks.put(0, Tuple.of(sentence, links));
-            // Incrementing Integer key with each put operation
-            } else picLinks.put(picLinks.keySet().size(), Tuple.of(sentence, links));
+            if (!links.isEmpty()) {
+                // Check whether we put fot the first time
+                picLinks.put(sentenceWithLinksCounter++, Tuple.of(sentence, links));
+//                if (picLinks.keySet().isEmpty()) {
+//                    picLinks.put(0, Tuple.of(sentence, links));
+//                // Incrementing Integer key with each put operation
+//                } else picLinks.put(picLinks.keySet().size(), Tuple.of(sentence, links));
+            }
         }
         return picLinks;
     }
