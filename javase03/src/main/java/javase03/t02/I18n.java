@@ -30,7 +30,7 @@ public class I18n {
             }
             //  --- Block where encoding is chosen using getBytes method and String constructor; ---
 
-            // Reading question number
+            // Reading for question number
             i18n.userInput = "";
             int userInputInt = 0;
             while (!(userInputInt > 0 && userInputInt < questions.keySet().size())) {
