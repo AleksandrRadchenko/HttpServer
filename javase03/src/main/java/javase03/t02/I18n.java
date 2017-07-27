@@ -23,6 +23,7 @@ public class I18n {
             if ("en".equals(i18n.userInput)) i18n.currentLocale = new Locale("en");
 
             //  --- Block where encoding is chosen using getBytes method and String constructor; ---
+            // TODO: 27.07.2017 try to replace with getResourceAsStream 
             ResourceBundle questions = ResourceBundle.getBundle("t02.I18n.Questions", i18n.currentLocale);
             for (String q : questions.keySet()) {
 //                if (!q.equals("q0")) System.out.println(i18n.getResourceInUTF(questions, q));
