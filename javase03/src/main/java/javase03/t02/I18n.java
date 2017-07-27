@@ -1,8 +1,6 @@
 package javase03.t02;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -22,14 +20,10 @@ public class I18n {
             if ("ru".equals(i18n.userInput)) i18n.currentLocale = new Locale("ru");
             if ("en".equals(i18n.userInput)) i18n.currentLocale = new Locale("en");
 
-            //  --- Block where encoding is chosen using getBytes method and String constructor; ---
-            // TODO: 27.07.2017 try to replace with getResourceAsStream 
             ResourceBundle questions = ResourceBundle.getBundle("t02.I18n.Questions", i18n.currentLocale);
             for (String q : questions.keySet()) {
-//                if (!q.equals("q0")) System.out.println(i18n.getResourceInUTF(questions, q));
                 if (!q.equals("qNumberPrompt")) System.out.println(questions.getString(q));
             }
-            //  --- Block where encoding is chosen using getBytes method and String constructor; ---
 
             // Reading for question number
             i18n.userInput = "";

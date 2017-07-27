@@ -8,3 +8,5 @@ docs
 build
 /javase04/src/main/resources/javase04/t01/*.txt
 /javase04/src/main/resources/javase04/t02/*.txt
+*.ser
+/javase04/src/main/resources/javase04/t03/TextInUTF-16.txt
