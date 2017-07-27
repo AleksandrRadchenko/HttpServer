@@ -45,7 +45,8 @@ public class MoviesCollectionTest {
         mc.shutDown();
         final MoviesCollection mc2 = new MoviesCollection();
         mc2.start();
-        assertThat(mc.getCollection(), Is.is(mc2.getCollection()));
+        assertThat(mc.getCollection(),
+                Is.is(mc2.getCollection()));
     }
 
 

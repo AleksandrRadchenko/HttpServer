@@ -8,7 +8,7 @@ import lombok.SneakyThrows;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +70,8 @@ public class PicLinksFinder {
     public Map<Integer, Tuple2<String, List<Integer>>> getPicLinks(@NonNull List<String> sentences) {
         int sentenceWithLinksCounter = 0;
         // Picture link pattern with capturing group for first and second link
-        p = Pattern.compile("(?<=[кс][.аеиоу][вх\\s]\\s?)(\\d{1,3})([, ил]+(\\d{1,3}))?");
+//        p = Pattern.compile("(?<=[кс][.аеиоу][вх\\s]\\s?)(\\d{1,3})([, ил]+(\\d{1,3}))?");
+        p = Pattern.compile(Patterns.PIC_LINKS_PATTERN);
         for (String sentence : sentences) {
             // Temporary list to accumulate picture links from current sentence
             List<Integer> links = new ArrayList<>();
@@ -97,8 +98,9 @@ public class PicLinksFinder {
     public List<String> getSentences(@NonNull String fileName) {
         String text = readFileToString(fileName);
         String valuableText = cleanHtmlTags(text);
-        // Splitting text in sentences
-        p = Pattern.compile("[А-ЯЁ][А-ЯЁа-яёa-z\\w\\s\\d\\p{Punct}«»–]*?[!.?]\\s+(?=[А-ЯЁ]|$)");
+        // Splitting text for sentences
+//        p = Pattern.compile("[А-ЯЁ][А-ЯЁа-яёa-z\\w\\s\\d\\p{Punct}«»–]*?[!.?]\\s+(?=[А-ЯЁ]|$)");
+        p = Pattern.compile(Patterns.SENTENCE_PATTERN);
         m = p.matcher(valuableText);
         List<String> sentences = new ArrayList<>();
         String s;
@@ -111,9 +113,9 @@ public class PicLinksFinder {
 
     private String cleanHtmlTags(String text) {
         // truncating not valuable bytes from the beginning of the file till "Мнения ученых"
-        String valuableText = text.substring(text.indexOf("\u041c\u043d\u0435\u043d\u0438\u044f \u0443\u0447\u0435\u043d\u044b\u0445"));
+        String valuableText = text.substring(text.indexOf(Patterns.MNENIYA_UCHENYH));
         // Excluding all pictures captions
-        p = Pattern.compile(">Рис.\\s*?\\d+");
+        p = Pattern.compile(Patterns.PIC_CAPTIONS);
         m = p.matcher(valuableText);
         valuableText = m.replaceAll(">");
         // Excluding html tags
@@ -129,7 +131,7 @@ public class PicLinksFinder {
     @SneakyThrows
     private static String readFileToString(@NonNull String fileName) {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), Charset.forName("Windows-1251")))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_16))) {
             while (br.ready()) {
                 sb.append((char)br.read());
             }
