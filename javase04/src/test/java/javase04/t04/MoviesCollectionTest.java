@@ -48,13 +48,6 @@ public class MoviesCollectionTest {
         assertThat(mc.getCollection(), Is.is(mc2.getCollection()));
     }
 
-    @Test
-    public void deserializingOnly() throws Exception {
-        final MoviesCollection mc2 = new MoviesCollection();
-        mc2.start();
-        assertThat(mc.getCollection(), Is.is(mc2.getCollection()));
-    }
-
 
 
 }
