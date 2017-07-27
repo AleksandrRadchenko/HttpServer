@@ -9,24 +9,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
 
 public class RegExpExerciseTest {
     private static final String fileName = "src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html";
     private static PicLinksFinder finder = new PicLinksFinder();
     private static List<String> sentences;
     private List<String> testText = new ArrayList<>();
+    private static boolean printOn = false;
 
     public void printPicLinks(Map<Integer, Tuple2<String, List<Integer>>> picLinks) {
+        if (printOn) {
             for (Integer i : picLinks.keySet()) {
-            System.out.printf("%s : ", picLinks.get(i)._1);
-            for (Integer integer : picLinks.get(i)._2) {
-                System.out.printf("%d, ", integer);
+                System.out.printf("%s : ", picLinks.get(i)._1);
+                for (Integer integer : picLinks.get(i)._2) {
+                    System.out.printf("%d, ", integer);
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
@@ -43,8 +44,10 @@ public class RegExpExerciseTest {
     public void getSentencesTest() throws Exception {
         sentences = finder.getSentences(fileName);
         int i = 0;
-        for (String sentence : sentences) {
-            System.out.printf("str %d: %s%n", ++i, sentence);
+        if (printOn) {
+            for (String sentence : sentences) {
+                System.out.printf("str %d: %s%n", ++i, sentence);
+            }
         }
     }
 
@@ -81,16 +84,5 @@ public class RegExpExerciseTest {
         sentences = finder.getSentences(fileName);
         final Map<Integer, Tuple2<String, List<Integer>>> picLinks2 = finder.getPicLinks(sentences);
         assertThat(finder.ifPicLinksSorted(picLinks2), Is.is(false));
-    }
-
-    @Test
-    public void tmpTest() throws Exception {
-        Pattern p = Pattern.compile("\\w*");
-        final String tmp = "asDA32dSsA{END}sadasd";
-        Matcher m = p.matcher(tmp);
-        while (m.find()) {
-            System.out.println(tmp.substring(m.start(), m.end()));
-        }
-
     }
 }

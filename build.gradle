@@ -14,9 +14,9 @@ subprojects {
     dependencies {
         compile 'io.vavr:vavr:+'
         compileOnly 'org.projectlombok:lombok:+'
-        testCompile 'junit:junit:+',
-                'org.junit.jupiter:junit-jupiter-api:+',
-                'org.hamcrest:java-hamcrest:+'
+        testCompile 'junit:junit:+'
+//                'org.junit.jupiter:junit-jupiter-api:+',
+//                'org.hamcrest:java-hamcrest:+'
 
     }
 
