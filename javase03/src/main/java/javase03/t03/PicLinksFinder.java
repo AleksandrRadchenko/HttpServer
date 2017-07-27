@@ -110,8 +110,8 @@ public class PicLinksFinder {
     }
 
     private String cleanHtmlTags(String text) {
-        // truncating not valuable bytes from the beginning of the file
-        String valuableText = text.substring(text.indexOf("Мнения ученых"));
+        // truncating not valuable bytes from the beginning of the file till "Мнения ученых"
+        String valuableText = text.substring(text.indexOf("\u041c\u043d\u0435\u043d\u0438\u044f \u0443\u0447\u0435\u043d\u044b\u0445"));
         // Excluding all pictures captions
         p = Pattern.compile(">Рис.\\s*?\\d+");
         m = p.matcher(valuableText);
