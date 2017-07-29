@@ -1,3 +1,5 @@
+package javase05.t01;
+
 public class FileUtilsClass {
     public static void main(String[] args) {
         getCurrentDirectory();

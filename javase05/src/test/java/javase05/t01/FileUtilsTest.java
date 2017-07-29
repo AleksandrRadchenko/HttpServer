@@ -1,3 +1,5 @@
+package javase05.t01;
+
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
