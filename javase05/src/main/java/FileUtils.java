@@ -1,6 +1,9 @@
 import java.io.*;
 import java.nio.file.*;
 
+/**
+ * Allows to show file contents, list dir, write to and delete the file.
+ */
 public interface FileUtils {
     static void showDirContents(String pathLocal) {
         try {
@@ -17,15 +20,17 @@ public interface FileUtils {
 
     static void showFileContents(String pathToFile) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathToFile)))) {
+            System.out.println("Working Directory = " +
+                    System.getProperty("user.dir"));
             Path p = Paths.get(pathToFile);
-            Path root = p.getRoot();
             System.out.printf("Contents of file \"%s\" in directory \"%s%s\":%n", p.getFileName(), p.getRoot(), p.subpath(0,p.getNameCount()-1));
             while (br.ready()) {
                 System.out.print((char)br.read());
             }
         } catch (FileNotFoundException e) {
-            System.err.printf("Please, specify correct file:%n%s%n", e.toString());
-        } catch (IOException e) {
+            System.err.printf("Please, specify correct file:%n%s", e);
+        }
+        catch (IOException e) {
             System.err.println(e);
         }
     }
@@ -48,13 +53,6 @@ public interface FileUtils {
         } catch (IOException e) {
             System.err.println(e);
         }
-//        try {
-//            BufferedInputStream is = new BufferedInputStream(new FileInputStream(new File(file.toUri())));
-//            System.out.println(is.available());
-//            is.close();
-//        } catch (IOException e) {
-//            System.err.println(e);
-//        }
     }
 
     static boolean deleteFile(String pathToFile) {

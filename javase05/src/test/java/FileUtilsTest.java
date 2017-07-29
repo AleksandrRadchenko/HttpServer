@@ -18,6 +18,13 @@ public class FileUtilsTest {
     }
 
     @Test
+    public void showFileContentsError() throws Exception {
+//        String fileToShow = "Temp\\0\\test.txt";
+        String fileToShow = "d:\\Temp\\0\\test.txt";
+        FileUtils.showFileContents(fileToShow);
+    }
+
+    @Test
     public void createFileContents() throws Exception {
 //        String fileToShow = "Temp\\0\\test.txt";
         String file = "d:\\Temp\\0\\170729.txt";
@@ -31,5 +38,12 @@ public class FileUtilsTest {
         String file = "170728.txt";
         assertThat(false, Is.is(FileUtils.deleteFile(file)));
     }
+
+    @Test
+    public void getCurrentDir() throws Exception {
+        FileUtilsClass.getCurrentDirectory();
+    }
+
+
 
 }
