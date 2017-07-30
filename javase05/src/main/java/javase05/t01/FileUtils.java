@@ -25,10 +25,11 @@ public interface FileUtils {
             System.out.println("Working Directory = " +
                     System.getProperty("user.dir"));
             Path p = Paths.get(pathToFile);
-            System.out.printf("Contents of file \"%s\" in directory \"%s%s\":%n", p.getFileName(), p.getRoot(), p.subpath(0,p.getNameCount()-1));
+            StringBuilder sb = new StringBuilder();
             while (br.ready()) {
-                System.out.print((char)br.read());
+                sb.append((char)br.read());
             }
+            System.out.printf("Contents of file \"%s\":%n", p);
         } catch (FileNotFoundException e) {
             System.err.printf("Please, specify correct file:%n%s", e);
         }

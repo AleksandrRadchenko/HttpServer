@@ -28,11 +28,12 @@ public class FileUtilsTest {
 
     @Test
     public void createFileContents() throws Exception {
-//        String fileToShow = "Temp\\0\\test.txt";
-        String file = "d:\\Temp\\0\\170729.txt";
-        String s = "Привет2";
+        String file = "a";
+//        String file = "d:\\Temp\\0\\170729.txt";
+        String s = "Привет1";
         FileUtils.writeToTxtFile(file, s, false);
         FileUtils.showFileContents(file);
+        FileUtils.deleteFile("a");
     }
 
     @Test
