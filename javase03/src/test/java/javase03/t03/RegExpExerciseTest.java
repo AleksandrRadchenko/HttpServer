@@ -75,7 +75,7 @@ public class RegExpExerciseTest {
     public void filterTextFromFile() throws Exception {
         sentences = finder.getSentences(fileName);
         final Map<Integer, Tuple2<String, List<Integer>>> picLinks = finder.getPicLinks(sentences);
-        finder.ifPicLinksSorted(picLinks);
+        assertThat(false, Is.is(finder.ifPicLinksSorted(picLinks)));
         printPicLinks(picLinks);
     }
 
