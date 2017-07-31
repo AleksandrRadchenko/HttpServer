@@ -16,11 +16,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("WeakerAccess")
 public class PicLinksFinder {
-
-    public static void main(String[] args) {
-//        readFileToString("javase03/src/main/resources/t03/PicLinksFinder/JF03 - 3.1 - Information handling_task_attachment.html");
-    }
 
     private Pattern p;
     private Matcher m;
