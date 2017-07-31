@@ -8,15 +8,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class FileUtilsTest {
     @Test
     public void showDirContents() throws Exception {
-        String dirToShow = "d:\\Temp\\";
-        FileUtils.showDirContents(dirToShow);
+        String dirToShow = ".";
+        assertThat(true, Is.is(FileUtils.showDirContents(dirToShow)));
+    }
+
+    @Test
+    public void showDirContentsFalse() throws Exception {
+        String dirToShow = "g:";
+        assertThat(false, Is.is(FileUtils.showDirContents(dirToShow)));
     }
 
     @Test
     public void showFileContents() throws Exception {
-//        String fileToShow = "Temp\\0\\test.txt";
-        String fileToShow = "d:\\Temp\\0\\test.txt";
-        FileUtils.showFileContents(fileToShow);
+        String fileToShow = "src\\main\\java\\javase05\\t01\\FileUtils.java";
+        assertThat(true, Is.is(FileUtils.showFileContents(fileToShow)));
     }
 
     @Test
