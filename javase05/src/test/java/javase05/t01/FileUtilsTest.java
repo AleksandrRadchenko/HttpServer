@@ -3,34 +3,45 @@ package javase05.t01;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
+import java.io.File;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FileUtilsTest {
     @Test
     public void showDirContents() throws Exception {
         String dirToShow = ".";
-        assertThat(true, Is.is(FileUtils.showDirContents(dirToShow)));
+        final boolean actual = FileUtils.showDirContents(dirToShow);
+        final boolean expected = true;
+        assertThat(actual, Is.is(expected));
     }
 
     @Test
     public void showDirContentsFalse() throws Exception {
         String dirToShow = "g:";
-        assertThat(false, Is.is(FileUtils.showDirContents(dirToShow)));
+        final boolean actual = FileUtils.showDirContents(dirToShow);
+        final boolean expected = false;
+        assertThat(actual, Is.is(expected));
     }
 
     @Test
     public void showFileContents() throws Exception {
-        String fileToShow = "src\\main\\java\\javase05\\t01\\FileUtils.java";
-        assertThat(true, Is.is(FileUtils.showFileContents(fileToShow)));
+        String s = File.separator;
+        String fileToShow = "src" + s + "main" + s + "java" + s + "javase05" + s + "t01" + s + "FileUtils.java";
+        final boolean actual = FileUtils.showFileContents(fileToShow.toString());
+        final boolean expected = true;
+        assertThat(actual, Is.is(expected));
     }
 
     @Test
     public void showFileContentsError() throws Exception {
-//        String fileToShow = "Temp\\0\\test.txt";
-        String fileToShow = "d:\\Temp\\0\\test.txt";
-        FileUtils.showFileContents(fileToShow);
+        String fileToShow = "dasdsad";
+        final boolean actual = FileUtils.showFileContents(fileToShow);
+        final boolean expected = false;
+        assertThat(actual, Is.is(expected));
     }
 
+    // TODO: 31.07.2017 not refactored 
     @Test
     public void createFileContents() throws Exception {
         String file = "a";
