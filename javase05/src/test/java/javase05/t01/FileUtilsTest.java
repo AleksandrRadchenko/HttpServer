@@ -28,7 +28,7 @@ public class FileUtilsTest {
     public void showFileContents() throws Exception {
         String s = File.separator;
         String fileToShow = "src" + s + "main" + s + "java" + s + "javase05" + s + "t01" + s + "FileUtils.java";
-        final boolean actual = FileUtils.showFileContents(fileToShow.toString());
+        final boolean actual = FileUtils.showFileContents(fileToShow);
         final boolean expected = true;
         assertThat(actual, Is.is(expected));
     }
@@ -41,28 +41,22 @@ public class FileUtilsTest {
         assertThat(actual, Is.is(expected));
     }
 
-    // TODO: 31.07.2017 not refactored 
     @Test
     public void createFileContents() throws Exception {
         String file = "a";
-//        String file = "d:\\Temp\\0\\170729.txt";
         String s = "Привет1";
-        FileUtils.writeToTxtFile(file, s, false);
-        FileUtils.showFileContents(file);
-        FileUtils.deleteFile("a");
+        final boolean actual = FileUtils.writeToTxtFile(file, s, false);
+        final boolean expected = true;
+        assertThat(actual, Is.is(expected));
+//        FileUtils.deleteFile("a");
     }
 
     @Test
     public void deleteFileFails() throws Exception {
-        String file = "170728.txt";
-        assertThat(false, Is.is(FileUtils.deleteFile(file)));
+        String fileToDelete = "170728.txt";
+        final boolean actual = FileUtils.deleteFile(fileToDelete);
+        final boolean expected = false;
+        assertThat(actual, Is.is(expected));
     }
-
-    @Test
-    public void getCurrentDir() throws Exception {
-        FileUtilsClass.getCurrentDirectory();
-    }
-
-
 
 }

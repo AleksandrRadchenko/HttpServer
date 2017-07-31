@@ -17,7 +17,8 @@ public interface FileUtils {
             }
             dirList.close();
         } catch (Exception e) {
-            System.err.println(e);
+            System.err.println("Exception in showDirContents method.");
+            e.printStackTrace();
             result = false;
         }
         return result;
@@ -37,7 +38,8 @@ public interface FileUtils {
             result = false;
         }
         catch (IOException e) {
-            System.err.println(e);
+            System.err.println("IOException in showFileContents method.");
+            e.printStackTrace();
             result = false;
         }
         return result;
@@ -57,7 +59,8 @@ public interface FileUtils {
             writer.write(text);
             writer.close();
         } catch (IOException e) {
-            System.err.println(e);
+            System.err.println("IOException in writeToTxtFile method.");
+            e.printStackTrace();
             result = false;
         }
         return result;
@@ -72,7 +75,8 @@ public interface FileUtils {
                 System.err.printf("Failed to delete file \"%s\".%n", pathToFile);
             }
         } catch (Exception e) {
-            System.err.println(e);
+            System.err.println("Exception in deleteFile method.");
+            e.printStackTrace();
             result = false;
         }
         return result;
