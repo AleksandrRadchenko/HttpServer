@@ -11,3 +11,4 @@ build
 *.ser
 /javase04/src/main/resources/javase04/t03/TextInUTF-16.txt
 /javase05/a
+~*
