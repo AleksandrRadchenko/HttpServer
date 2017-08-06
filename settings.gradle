@@ -6,4 +6,5 @@ include 'javase01',
         'javase04',
         'javase05',
         'javase06',
+        'HTTPserver',
         'other'

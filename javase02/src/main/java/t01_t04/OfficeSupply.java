@@ -1,6 +1,8 @@
 package t01_t04;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
 
 import java.math.BigDecimal;
 
