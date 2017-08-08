@@ -11,6 +11,8 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Log4j2
 public class SimpleHTTPServer {
@@ -21,6 +23,7 @@ public class SimpleHTTPServer {
      * @return 1 if all ok, -1 if cant' parse for port number, 0 if no args provided
      */
     private ServerSocket ss;
+    @SneakyThrows
     public int openPort(String[] args) {
         int result = 0;
         if ((args == null) || (args.length < 1)) {
@@ -37,13 +40,18 @@ public class SimpleHTTPServer {
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
                     log.printf(Level.INFO, "Server started: http:/%s:%d", getLocalIpAddr(), port);
+                    ExecutorService executorService = Executors.newCachedThreadPool();
+                    while (!Thread.currentThread().isInterrupted()) {
+                        executorService.execute(new ConnectionProcessor(ss.accept()));
+                        log.info("Processing finished");
+                    }
                 }
             } catch (NumberFormatException e) {
                 log.error("can't parse " + e.getMessage() + ". Please specify correct port.");
                 result = -1;
             } catch (IOException e) {
                 log.error("can't start " + e.getMessage() + ". Please specify correct port.");
-
+                throw e;
             } finally {
                 try {
                     if (ss != null) ss.close();
@@ -57,7 +65,7 @@ public class SimpleHTTPServer {
 
     @SneakyThrows
     /**
-     * Returns first fount ip addres, which contains with "192" or "10.0"
+     * Returns first fount ip addres, which contains "192" or "10.0"
      */
     private static String getLocalIpAddr() {
         Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
