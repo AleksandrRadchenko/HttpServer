@@ -1,5 +1,6 @@
 package HTTPserver;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
@@ -8,21 +9,30 @@ import java.io.IOException;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Log4j2
 public class SimpleHTTPServer {
+    private ServerSocket ss;
+    @Getter
+    private static int requestCounter = 0;
+    public static void increaseRequestCounter() {
+        requestCounter++;
+    }
+
+    public static void main(String[] args) {
+        SimpleHTTPServer server = new SimpleHTTPServer();
+        server.openPort(args);
+    }
     /**
      * Starts HTTP server on specified port
      * @param args first argument should be port to start HTTP server on in String representation.
      *             For example: "8080"
      * @return 1 if all ok, -1 if cant' parse for port number, 0 if no args provided
      */
-    private ServerSocket ss;
     @SneakyThrows
     public int openPort(String[] args) {
         int result = 0;
@@ -40,10 +50,14 @@ public class SimpleHTTPServer {
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
                     log.printf(Level.INFO, "Server started: http:/%s:%d", getLocalIpAddr(), port);
-                    ExecutorService executorService = Executors.newCachedThreadPool();
+//                    ExecutorService executorService = Executors.newCachedThreadPool();
                     while (!Thread.currentThread().isInterrupted()) {
-                        executorService.execute(new ConnectionProcessor(ss.accept()));
-                        log.info("Processing finished");
+                        // Processing request
+                        Socket s = ss.accept();
+                        ConnectionProcessor cp = new ConnectionProcessor(s);
+                        cp.run();
+//                        executorService.execute(new ConnectionProcessor(s));
+                        log.info("Processing finished, request counter = " + requestCounter);
                     }
                 }
             } catch (NumberFormatException e) {
