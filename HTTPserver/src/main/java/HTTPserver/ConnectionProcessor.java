@@ -8,15 +8,21 @@ import java.net.Socket;
 @Log4j2
 public class ConnectionProcessor implements Runnable {
     private Socket socket;
+    private OutputStream os;
+    private InputStream is;
 
     public ConnectionProcessor(Socket socket) {
         this.socket = socket;
+        try {
+            os = socket.getOutputStream();
+            is = socket.getInputStream();
+        } catch (IOException e) {
+            log.error("Error while creating socket input/output stream", e);
+        }
     }
+
     public void run() {
-        try (OutputStream os = socket.getOutputStream();
-             InputStream is = socket.getInputStream()) {
             String request = readFromInputStream(is);
-            //            byte[] file = "hi".getBytes();
             SimpleHTTPServer.increaseRequestCounter();
             System.out.println("----- REQUEST " + SimpleHTTPServer.getRequestCounter() + " START -----" + System.lineSeparator() + request + System.lineSeparator());
             System.out.println("------ REQUEST " + SimpleHTTPServer.getRequestCounter() + " END ------");
@@ -30,20 +36,28 @@ public class ConnectionProcessor implements Runnable {
                             "";
             byte[] bytes = String.format(RESPONSE, new String(file)).getBytes();
 //            printBytes(bytes);
+        try {
             os.write(bytes);
             os.flush();
+            socket.close();
         } catch (IOException e) {
             log.error(e);
         }
     }
 
-    private String readFromInputStream(InputStream inputStream) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+    private void writeResponse(String s) {
+
+    }
+
+    private String readFromInputStream(InputStream inputStream) {
+        BufferedInputStream bis = new BufferedInputStream(inputStream);
         StringBuilder sb = new StringBuilder();
-        String i;
-        while (br.ready()) {
-            sb.append(br.readLine());
-            sb.append(System.lineSeparator());
+        try {
+            while (bis.available() > 0) {
+                sb.append((char)bis.read());
+            }
+        } catch (IOException e) {
+            log.error(e);
         }
         return sb.toString();
     }
