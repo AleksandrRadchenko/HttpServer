@@ -24,6 +24,7 @@ public class FileProcessor {
             }
         } catch (IOException e) {
             log.error(e);
+            return null;
         }
         return result;
     }
