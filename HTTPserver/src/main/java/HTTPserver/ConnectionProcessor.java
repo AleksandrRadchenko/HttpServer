@@ -20,7 +20,7 @@ public class ConnectionProcessor implements Runnable {
             os = socket.getOutputStream();
             is = socket.getInputStream();
         } catch (IOException e) {
-            log.error("Error while creating socket input/output stream", e);
+            log.error("Error while creating socket input/output stream. ", e);
         }
     }
 
@@ -37,7 +37,7 @@ public class ConnectionProcessor implements Runnable {
         httpResponse.setStatus(HttpCodes._200);
 
         //ContentType
-        httpResponse.setContentType("text/html");
+        httpResponse.setContentType(RequestParser.getMimeType(httpRequest.getPath()));
 
         //Connection
         httpResponse.setConnection("close");
@@ -49,6 +49,7 @@ public class ConnectionProcessor implements Runnable {
             writeResponse(httpResponse);
             return;
         }
+
         httpResponse.setBody(file);
 
         //Write it out

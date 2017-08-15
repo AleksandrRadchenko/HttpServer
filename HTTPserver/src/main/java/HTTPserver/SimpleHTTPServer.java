@@ -56,6 +56,7 @@ public class SimpleHTTPServer {
                         Socket s = ss.accept();
                         ConnectionProcessor cp = new ConnectionProcessor(s);
                         cp.run();
+                        // TODO: 15.08.2017 singlethread -> multithread 
 //                        executorService.execute(new ConnectionProcessor(s));
                         log.info("Processing finished, request counter = " + requestCounter);
                     }

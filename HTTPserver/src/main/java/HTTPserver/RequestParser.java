@@ -1,10 +1,13 @@
 package HTTPserver;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public interface RequestParser {
     org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(RequestParser.class);
+    Properties mimeTypes = new Properties();
 
     static HttpRequest parse(String request) {
         HttpRequest httpRequest = new HttpRequest();
@@ -49,8 +52,21 @@ public interface RequestParser {
 // TODO: 14.08.2017 body 
         return httpRequest;
     }
-    
-    static void parsePath(String path) {
-        // TODO: 14.08.2017 form response type according to file type 
+
+    static String getMimeType(String path) {
+        String mimeType = "text/html";
+        try {
+            mimeTypes.load(RequestParser.class.getClassLoader().getResourceAsStream(Strings.MIME_TYPES_PATH));
+            String extension = ".html";
+            int indexOfDot = path.lastIndexOf(".");
+            if (indexOfDot > -1 && (indexOfDot != path.length() - 1))
+                extension = path.substring(indexOfDot, path.length());
+            mimeType = mimeTypes.getProperty(extension);
+        } catch (IOException e) {
+            log.error("Error while loading mime types. Using default 'text/html'.", e);
+        }
+        return mimeType == null ?
+                "text/html" :
+                mimeType;
     }
 }

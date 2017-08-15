@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 @Log4j2
 public class FileProcessor {
-
+    // TODO: 15.08.2017 change encoding to system default 
     public static byte[] getFile(String fileName) {
         byte[] result;
         try (FileInputStream fis = new FileInputStream(fileName);
