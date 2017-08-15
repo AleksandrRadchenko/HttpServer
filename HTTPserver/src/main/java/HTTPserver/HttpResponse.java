@@ -17,8 +17,7 @@ public class HttpResponse {
         return status.toString() +
                 contentType +
                 contentLength +
-                connection + "\r\n" +
-                body;
+                connection + "\r\n";
     }
 
     //Getters
