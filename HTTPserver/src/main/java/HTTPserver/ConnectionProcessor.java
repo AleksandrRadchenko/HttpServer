@@ -10,9 +10,12 @@ public class ConnectionProcessor implements Runnable {
     private Socket socket;
     private OutputStream os;
     private InputStream is;
+    private HttpRequest httpRequest;
+    private HttpResponse httpResponse;
 
     public ConnectionProcessor(Socket socket) {
         this.socket = socket;
+
         try {
             os = socket.getOutputStream();
             is = socket.getInputStream();
@@ -22,29 +25,36 @@ public class ConnectionProcessor implements Runnable {
     }
 
     public void run() {
-            String request = readFromInputStream(is);
-//            printRequest(request);
-            HttpRequest httpRequest = RequestParser.parse(request);
+            httpRequest = RequestParser.parse(readFromInputStream(is));
             if (httpRequest == null) {
-                writeResponse(Strings.HTTP_400);
+                httpResponse.setStatus(HttpCodes._400);
+                writeResponse(httpResponse);
                 return;
             }
+
             byte[] file = FileProcessor.getFile(Strings.PATH + httpRequest.getPath());
             if (file == null) {
-                writeResponse(Strings.HTTP_404);
+                httpResponse.setStatus(HttpCodes._404);
+                writeResponse(httpResponse);
                 return;
             }
-            writeResponse(String.format(Strings.RESPONSE, new String(file)));
+
+            httpResponse.setContentType("text/html");
+            httpResponse.setConnection("close");
+            httpResponse.setBody(file);
+
+            writeResponse(httpResponse);
     }
 
     /**
      * Writing to socket's output stream and closing the socket
-     * @param s
+     *
+     * @param r String to write to the output stream
      */
-    private void writeResponse(String s) {
+    private void writeResponse(HttpResponse r) {
         try {
-            os.write(s.getBytes());
-            // TODO: 13.08.2017 serve connection keep-alive status, don't close socket's imput stream
+            os.write(r.toString().getBytes());
+            // TODO: 13.08.2017 serve connection keep-alive status, don't close socket's input stream
             socket.close();
         } catch (IOException e) {
             log.error(e);
@@ -52,9 +62,9 @@ public class ConnectionProcessor implements Runnable {
     }
 
     /**
-     * Reads InputStream.available() bytes from inputStream
-     * @param inputStream
-     * @return
+     * Reads InputStream.available() bytes from inputStream using readLine()
+     * @param inputStream to be read from
+     * @return String read from input stream
      */
     private String readFromInputStream(InputStream inputStream) {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -84,8 +94,8 @@ public class ConnectionProcessor implements Runnable {
     }
 
     /**
-     * Temporary method to debuggin request
-     * @param request String
+     * Temporary method for debugging requests
+     * @param request String to print to System.out
      */
     private void printRequest(String request) {
         SimpleHTTPServer.increaseRequestCounter();

@@ -49,4 +49,8 @@ public interface RequestParser {
 // TODO: 14.08.2017 body 
         return httpRequest;
     }
+    
+    static void parsePath(String path) {
+        // TODO: 14.08.2017 form response type according to file type 
+    }
 }
