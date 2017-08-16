@@ -3,6 +3,12 @@ package HTTPserver;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import static org.junit.Assert.assertThat;
 
 public class SimpleHTTPServerTest {
@@ -34,8 +40,19 @@ public class SimpleHTTPServerTest {
 
     @Test
     public void test() throws Exception {
+        ExecutorService executorService = Executors.newCachedThreadPool();
         String[] args = {"8080"};
-        int expected = server.openPort(args);
+        executorService.execute(server.openPort(args));
+//        int expected = server.openPort(args);
+        Socket socket = new Socket("192.168.0.79", 8080);
+        InputStream is = socket.getInputStream();
+        OutputStream os = socket.getOutputStream();
+        os.write("GET /face4small4.jpg HTTP/1.1\r\nHost: http://192.168.0.79:8080".getBytes());
+        while (is.available() > 0) {
+            System.out.print(is.read());
+        }
+        System.out.println("End of stream");
+        socket.close();
     }
 
 }

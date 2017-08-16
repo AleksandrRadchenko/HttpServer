@@ -65,11 +65,17 @@ public class ConnectionProcessor implements Runnable {
         try {
             os.write(r.toString().getBytes());
             os.write(r.getBody());
-            log.info(r.getStatus().toString() + " for URI: " + httpRequest.getPath());
+            os.flush();
+            log.info(r.getStatus().toString() + (httpRequest == null ? "" : " for URI: " + httpRequest.getPath()) );
             // TODO: 13.08.2017 serve connection keep-alive status, don't close socket's input stream
-            socket.close();
         } catch (IOException e) {
             log.error(e);
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                log.error(e);
+            }
         }
     }
 

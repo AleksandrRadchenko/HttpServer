@@ -1,6 +1,8 @@
 package HTTPserver;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -56,12 +58,14 @@ public interface RequestParser {
     static String getMimeType(String path) {
         String mimeType = "text/html";
         try {
-            mimeTypes.load(RequestParser.class.getClassLoader().getResourceAsStream(Strings.MIME_TYPES_PATH));
-            String extension = ".html";
-            int indexOfDot = path.lastIndexOf(".");
-            if (indexOfDot > -1 && (indexOfDot != path.length() - 1))
-                extension = path.substring(indexOfDot, path.length());
-            mimeType = mimeTypes.getProperty(extension);
+            mimeType = Files.probeContentType(Paths.get(path));
+////             Without using Files class. Loading local mime.types resource and query it for file extension
+//            mimeTypes.load(RequestParser.class.getClassLoader().getResourceAsStream(Strings.MIME_TYPES_PATH));
+//            String extension = ".html";
+//            int indexOfDot = path.lastIndexOf(".");
+//            if (indexOfDot > -1 && (indexOfDot != path.length() - 1))
+//                extension = path.substring(indexOfDot, path.length());
+//            mimeType = mimeTypes.getProperty(extension);
         } catch (IOException e) {
             log.error("Error while loading mime types. Using default 'text/html'.", e);
         }
