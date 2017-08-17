@@ -42,7 +42,7 @@ public class SimpleHTTPServerTest {
     public void test() throws Exception {
         ExecutorService executorService = Executors.newCachedThreadPool();
         String[] args = {"8080"};
-        executorService.execute(server.openPort(args));
+        executorService.execute(new ServerStarter(args));
 //        int expected = server.openPort(args);
         Socket socket = new Socket("192.168.0.79", 8080);
         InputStream is = socket.getInputStream();

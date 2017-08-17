@@ -23,10 +23,6 @@ public class SimpleHTTPServer {
         requestCounter++;
     }
 
-    public static void main(String[] args) {
-        SimpleHTTPServer server = new SimpleHTTPServer();
-        server.openPort(args);
-    }
     /**
      * Starts HTTP server on specified port
      * @param args first argument should be port to start HTTP server on in String representation.
