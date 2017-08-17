@@ -13,6 +13,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Log4j2
 public class SimpleHTTPServer {
@@ -46,14 +48,15 @@ public class SimpleHTTPServer {
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
                     log.printf(Level.INFO, "Server started: http:/%s:%d", getLocalIpAddr(), port);
-//                    ExecutorService executorService = Executors.newCachedThreadPool();
+                    ExecutorService executorService = Executors.newCachedThreadPool();
                     while (!Thread.currentThread().isInterrupted()) {
                         // Processing request
                         Socket s = ss.accept();
-                        ConnectionProcessor cp = new ConnectionProcessor(s);
-                        cp.run();
+//                        Single thread for debugging purposes
+//                        ConnectionProcessor cp = new ConnectionProcessor(s);
+//                        cp.run();
                         // TODO: 15.08.2017 singlethread -> multithread 
-//                        executorService.execute(new ConnectionProcessor(s));
+                        executorService.execute(new ConnectionProcessor(s));
                         log.info("Processing finished, request counter = " + requestCounter++);
                     }
                 }
