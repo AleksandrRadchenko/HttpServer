@@ -3,6 +3,8 @@ package HTTPserver;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 /**
@@ -11,20 +13,14 @@ import java.util.Arrays;
  */
 @Log4j2
 public class FileProcessor {
-    // TODO: 15.08.2017 change encoding to system default 
+    /**
+     * For files smaller then 2Gb
+     * @param fileName String representation of path to the file
+     * @return byte array with raw file contents
+     */
     public static byte[] getFile(String fileName) {
-        byte[] result;
-        try (FileInputStream fis = new FileInputStream(fileName);
-             BufferedInputStream br = new BufferedInputStream(fis)) {
-            result = new byte[(int) fis.getChannel().size()];
-            int i = 0;
-            byte read;
-            // TODO: 17.08.2017 bug here: FF read as -1 
-            while ((read = (byte) br.read()) != -1) {
-                result[i] = read;
-                i++;
-            }
-            return result;
+        try {
+            return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
             log.error(e);
             return null;
@@ -32,14 +28,9 @@ public class FileProcessor {
     }
 
     /**
-     * Copied from Java 9
-     * @param is
-     * @param length
-     * @param readAll
-     * @return
-     * @throws IOException
+     * Copied from Java 9 for educational purposes
      */
-    public static byte[] readFully(InputStream is, int length, boolean readAll)
+    private static byte[] readFully(InputStream is, int length, boolean readAll)
             throws IOException {
         byte[] output = {};
         if (length == -1) length = Integer.MAX_VALUE;
@@ -69,4 +60,26 @@ public class FileProcessor {
         }
         return output;
     }
+
+    /**
+     * Bugged, do not use. Remain here for study purposes.
+     * @param fileName String representation of path to the file
+     * @return
+     */
+    private static byte[] getFile0(String fileName) {
+        byte[] result;
+        try (FileInputStream fis = new FileInputStream(fileName);
+             BufferedInputStream br = new BufferedInputStream(fis)) {
+            result = new byte[(int) fis.getChannel().size()];
+            int i = 0;
+            int read;
+            while ((read = br.read()) != -1)
+                result[i++] = (byte) read;
+            return result;
+        } catch (IOException e) {
+            log.error(e);
+            return null;
+        }
+    }
+
 }

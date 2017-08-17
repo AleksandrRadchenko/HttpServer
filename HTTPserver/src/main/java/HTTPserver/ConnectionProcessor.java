@@ -28,7 +28,7 @@ public class ConnectionProcessor implements Runnable {
         httpResponse = new HttpResponse();
 
         //Status
-        httpRequest = RequestParser.parse(readFromInputStream(is));
+        httpRequest = RequestParser.parse(readStringFromInputStream(is));
         if (httpRequest == null) {
             httpResponse.setStatus(HttpCodes._400);
             writeResponse(httpResponse);
@@ -85,7 +85,7 @@ public class ConnectionProcessor implements Runnable {
      * @param inputStream to be read from
      * @return String read from input stream
      */
-    private String readFromInputStream(InputStream inputStream) {
+    private String readStringFromInputStream(InputStream inputStream) {
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
         StringBuilder sb = new StringBuilder();
         String s;
