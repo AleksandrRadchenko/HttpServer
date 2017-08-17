@@ -14,12 +14,12 @@ public class SimpleHTTPServerTest {
     private String[] args = {"8080"};
 
 
-//  For running server in local environment for tests
-    @Test
-    public void test0() throws Exception {
-        String[] args = {"8080"};
-        int expected = server.openPort(args);
-    }
+////  For running server in local environment for tests
+//    @Test
+//    public void test0() throws Exception {
+//        String[] args = {"8080"};
+//        int expected = server.openPort(args);
+//    }
 
     @Test
     public void strArgsFail() throws Exception {
