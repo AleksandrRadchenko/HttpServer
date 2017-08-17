@@ -2,9 +2,8 @@ package HTTPserver;
 
 import lombok.extern.log4j.Log4j2;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.Arrays;
 
 /**
  * Reads file from disk and returns as byte array. File size should not be
@@ -20,6 +19,7 @@ public class FileProcessor {
             result = new byte[(int) fis.getChannel().size()];
             int i = 0;
             byte read;
+            // TODO: 17.08.2017 bug here: FF read as -1 
             while ((read = (byte) br.read()) != -1) {
                 result[i] = read;
                 i++;
@@ -29,5 +29,44 @@ public class FileProcessor {
             log.error(e);
             return null;
         }
+    }
+
+    /**
+     * Copied from Java 9
+     * @param is
+     * @param length
+     * @param readAll
+     * @return
+     * @throws IOException
+     */
+    public static byte[] readFully(InputStream is, int length, boolean readAll)
+            throws IOException {
+        byte[] output = {};
+        if (length == -1) length = Integer.MAX_VALUE;
+        int pos = 0;
+        while (pos < length) {
+            int bytesToRead;
+            if (pos >= output.length) { // Only expand when there's no room
+                bytesToRead = Math.min(length - pos, output.length + 1024);
+                if (output.length < pos + bytesToRead) {
+                    output = Arrays.copyOf(output, pos + bytesToRead);
+                }
+            } else {
+                bytesToRead = output.length - pos;
+            }
+            int cc = is.read(output, pos, bytesToRead);
+            if (cc < 0) {
+                if (readAll && length != Integer.MAX_VALUE) {
+                    throw new EOFException("Detect premature EOF");
+                } else {
+                    if (output.length != pos) {
+                        output = Arrays.copyOf(output, pos);
+                    }
+                    break;
+                }
+            }
+            pos += cc;
+        }
+        return output;
     }
 }

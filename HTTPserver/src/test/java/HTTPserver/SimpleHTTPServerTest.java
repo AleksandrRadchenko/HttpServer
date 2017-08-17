@@ -53,9 +53,7 @@ public class SimpleHTTPServerTest {
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        int responseCode = connection.getResponseCode();
-//        System.out.println("\nSending 'GET' request to URL : " + urlString);
-//        System.out.println("Response Code : " + responseCode);
+//        int responseCode = connection.getResponseCode();
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(connection.getInputStream()));
@@ -75,16 +73,34 @@ public class SimpleHTTPServerTest {
         byte[] expected = FileProcessor.getFile(Strings.PATH + "/test.txt");
         assertThat(actual, Is.is(expected));
         t1.interrupt();
-//        t1.join();
 
-//        InputStream is = socket.getInputStream();
-//        OutputStream os = socket.getOutputStream();
-//        os.write("GET /face4small4.jpg HTTP/1.1\r\nHost: http://192.168.0.79:8080".getBytes());
-//        while (is.available() > 0) {
-//            System.out.print(is.read());
-//        }
-//        System.out.println("End of stream");
-//        socket.close();
     }
+
+    @Test
+    public void test2() throws Exception {
+        String[] args = {"8080"};
+        Thread t1 = new Thread(new ServerStarter(args));
+        t1.start();
+
+        String urlString = "http://localhost:8080/face4small.jpg";
+        URL url = new URL(urlString);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        byte[] response = FileProcessor.readFully(connection.getInputStream(), -1, true);
+        byte[] actual = response;
+        byte[] expected = FileProcessor.getFile(Strings.PATH + "/face4small.jpg");
+        assertThat(actual, Is.is(expected));
+        t1.interrupt();
+    }
+
+    @Test
+    public void testFileProcessor() throws Exception {
+        byte[] bArray = FileProcessor.getFile(Strings.PATH + "/face4small.jpg");
+        for (byte b : bArray) {
+            System.out.print(b);
+        }
+    }
+
+
 
 }
