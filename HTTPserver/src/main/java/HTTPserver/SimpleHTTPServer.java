@@ -54,7 +54,7 @@ public class SimpleHTTPServer {
                         cp.run();
                         // TODO: 15.08.2017 singlethread -> multithread 
 //                        executorService.execute(new ConnectionProcessor(s));
-                        log.info("Processing finished, request counter = " + requestCounter);
+                        log.info("Processing finished, request counter = " + requestCounter++);
                     }
                 }
             } catch (NumberFormatException e) {
