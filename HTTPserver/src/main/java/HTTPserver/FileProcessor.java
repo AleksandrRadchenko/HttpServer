@@ -62,7 +62,7 @@ public class FileProcessor {
     }
 
     /**
-     * Bugged, do not use. Remain here for study purposes.
+     * Remain here for study purposes.
      * @param fileName String representation of path to the file
      * @return
      */
