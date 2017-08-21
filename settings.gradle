@@ -1,10 +1,4 @@
 rootProject.name = 'JavaSchool'
 
-include 'javase01',
-        'javase02',
-        'javase03',
-        'javase04',
-        'javase05',
-        'javase06',
-        'HTTPserver',
+include 'HTTPserver',
         'other'

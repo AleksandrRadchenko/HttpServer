@@ -6,12 +6,4 @@ docs
 *.iml
 /.gradle/
 build
-/javase04/src/main/resources/javase04/t01/*.txt
-/javase04/src/main/resources/javase04/t02/*.txt
-*.ser
-/javase04/src/main/resources/javase04/t03/TextInUTF-16.txt
-/javase05/a
 ~*
-/HTTPserver/src/main/resources/HTTPServer/files/scr.png
-/HTTPserver/src/main/resources/HTTPServer/files/97.pdf
-/HTTPserver/src/main/resources/HTTPServer/files/face4small4.jpg
