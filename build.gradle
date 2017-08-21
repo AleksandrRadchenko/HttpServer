@@ -12,8 +12,9 @@ subprojects {
     }
 
     dependencies {
-        compile 'io.vavr:vavr:+',
-                'org.apache.logging.log4j:log4j-core:+'
+        compile 'org.apache.logging.log4j:log4j-core:+'//,
+                //'io.vavr:vavr:+'
+
         compileOnly 'org.projectlombok:lombok:+'
         testCompile 'junit:junit:+'
 //                'org.junit.jupiter:junit-jupiter-api:+',
