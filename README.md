@@ -1,5 +1,5 @@
 # EPAM Labs Teams - HTTP Server project
-[ ![Codeship Status for Alsturm/JavaSchool](https://app.codeship.com/projects/534a42a0-68da-0135-a2fd-7252115b1a9b/status?branch=master)](https://app.codeship.com/projects/227204)
+[ ![Codeship Status for Alsturm/JavaSchool](https://app.codeship.com/projects/534a42a0-68da-0135-a2fd-7252115b1a9b/status?branch=master)](https://app.codeship.com/projects/241511)
 
 21.08.2017 - Functionality at the moment of sharing code to the EPAM Labs working group:
 
