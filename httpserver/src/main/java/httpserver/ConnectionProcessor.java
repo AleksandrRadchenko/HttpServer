@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+/**
+ * Processes provided socket for HttpRequest, forms HttpResponse object and
+ * writes it to the socket's output stream.
+ */
 @Log4j2
 public class ConnectionProcessor implements Runnable {
     private Socket socket;
@@ -30,6 +34,9 @@ public class ConnectionProcessor implements Runnable {
         }
     }
 
+    /**
+     * Forms HttpResponse object and writes it to socket's output stream.
+     */
     public void run() {
         httpResponse = new HttpResponse();
 
@@ -107,7 +114,9 @@ public class ConnectionProcessor implements Runnable {
     }
 
     /**
-     * Returns first fount ip addres, which contains "192" or "10.0"
+     * Returns first found local ip address, which contains "192" or "10.0".
+     * @return String representation of IP address, like "192.168.0.78" or
+     * empty String if none address wich begins from "10.0" or "192" found.
      */
     @SneakyThrows
     static String getLocalIpAddr() {

@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class to start the server. Each socket, created by ServerSocket.accept() is provided to
+ * executor service. Port parse and server socket error's handling here.
+ */
 @SuppressWarnings("WeakerAccess")
 @Log4j2
 public class SimpleHTTPServer {
@@ -29,7 +33,7 @@ public class SimpleHTTPServer {
     /**
      * Starts HTTP server on specified port
      * @param args first argument should be port to start HTTP server on in String representation.
-     *             For example: "8080"
+     *             For example: "8080". Should be in range 1024 < port < 65536.
      * @return 1 if all ok, -1 if cant' parse for port number, 0 if no args provided
      */
     @SneakyThrows

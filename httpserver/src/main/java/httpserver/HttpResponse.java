@@ -3,6 +3,9 @@ package httpserver;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * POJO to contain Http responses.
+ */
 public class HttpResponse {
     @Setter
     @Getter

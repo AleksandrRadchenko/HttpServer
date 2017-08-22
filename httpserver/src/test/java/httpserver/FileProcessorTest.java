@@ -10,6 +10,9 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/**
+ * Tests for methods of FileProcessor interface
+ */
 public class FileProcessorTest {
     @Test
     public void directoryListing() throws Exception {

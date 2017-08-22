@@ -9,6 +9,9 @@ import java.io.InputStream;
 
 import static org.junit.Assert.assertThat;
 
+/**
+ * Tests for methods of SimpleHTTPServer class
+ */
 public class SimpleHTTPServerTest {
     private SimpleHTTPServer server = new SimpleHTTPServer();
     private String[] args = {"8080"};

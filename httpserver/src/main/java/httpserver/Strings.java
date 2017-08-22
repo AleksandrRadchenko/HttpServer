@@ -1,5 +1,8 @@
 package httpserver;
 
+/**
+ * Utility interface to hold all project String constants in one place.
+ */
 public interface Strings {
     String RESPONSE =
             HttpCodes._200.toString() +

@@ -13,18 +13,14 @@ import java.util.List;
 
 
 /**
- * Reads file from disk and returns as byte array. File size should not be
- * more than 2 Gb (Integer.MAX_VALUE), or it will be truncated to 2 Gb.
+ * Utility interface for methods to operate files.
  */
-@Log4j2
-final class FileProcessor {
-    /**
-     * Utility classes should not have a public or default constructor.
-     */
-    private FileProcessor() { }
+interface FileProcessor {
+    org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(RequestParser.class);
 
     /**
-     * For files smaller then 2Gb.
+     * Reads file from disk and returns as byte array. File size should not be
+     * more than 2 Gb (Integer.MAX_VALUE), or it will be truncated to 2 Gb.
      * @param fileName String representation of path to the file.
      * @return byte array with raw file contents.
      */
@@ -90,9 +86,9 @@ final class FileProcessor {
     }
 
     /**
-     * Copied from Java 9 for educational purposes.
+     * Copied from Java 9 (stackoverflow exactly) for educational purposes.
      */
-    private static byte[] readFully(final InputStream is, int length, final boolean readAll)
+    static byte[] readFully(final InputStream is, int length, final boolean readAll)
             throws IOException {
         byte[] output = {};
         if (length == -1)
@@ -129,7 +125,7 @@ final class FileProcessor {
      * @param fileName String representation of path to the file.
      * @return byte array with raw file contents.
      */
-    private static byte[] getFile0(final String fileName) {
+    static byte[] getFile0(final String fileName) {
         byte[] result;
         try (FileInputStream fis = new FileInputStream(fileName);
              BufferedInputStream br = new BufferedInputStream(fis)) {
