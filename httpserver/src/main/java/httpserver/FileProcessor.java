@@ -43,7 +43,7 @@ final class FileProcessor {
      * @return List<String> with names of all files and folders in the provided dir
      * or empty ArrayList<String> if error occurs.
      */
-    static List<String> directoryListing(final Path dir) {
+    static List<String> directoryListing(Path dir) {
         List<String> result = new ArrayList<>();
         if (dir == null || !Files.isDirectory(dir)) {
             log.error("Provided path is not the directory");
@@ -57,8 +57,9 @@ final class FileProcessor {
             dirList.close();
         } catch (Exception e) {
             log.error("Exception in directoryListing method.", e);
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
+        return result;
     }
 
     /**

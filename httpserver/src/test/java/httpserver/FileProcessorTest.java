@@ -3,6 +3,7 @@ package httpserver;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
