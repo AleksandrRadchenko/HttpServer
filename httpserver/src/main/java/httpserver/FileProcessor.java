@@ -28,12 +28,20 @@ final class FileProcessor {
      * @param fileName String representation of path to the file.
      * @return byte array with raw file contents.
      */
-    static byte[] getFile(final String fileName) {
+    static byte[] readFromFile(final String fileName) {
         try {
             return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
             log.error(e);
             return null;
+        }
+    }
+
+    static void writeToFile(final Path path, final byte[] contents) {
+        try {
+            Files.write(path, contents);
+        } catch (IOException e) {
+            log.error(e);
         }
     }
 
@@ -60,6 +68,25 @@ final class FileProcessor {
             return new ArrayList<>();
         }
         return result;
+    }
+
+    static void generateIndexHtml() {
+        final String body = "<html>\r\n" +
+                "    <head>\r\n" +
+                "        <meta charset=\"utf-8\"/>\r\n" +
+                "    </head>\r\n" +
+                "    <body>\r\n" +
+                "        <h1>List of files:</h1>\r\n" +
+                "%s" +
+                "    </body>\r\n" +
+                "</html>";
+        StringBuffer sb = new StringBuffer();
+        for (String s : directoryListing(Paths.get(Strings.PATH))) {
+            String appendable = "        <a href=\"" + s + "\">" + s + "</a><br>";
+            sb.append(appendable);
+            sb.append(System.lineSeparator());
+        }
+        writeToFile(Paths.get(Strings.PATH + "/index.html"), String.format(body, sb.toString()).getBytes());
     }
 
     /**

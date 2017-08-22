@@ -48,7 +48,7 @@ public class SimpleHTTPServer {
                     log.info("specified port = " + port);
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
-                    log.printf(Level.INFO, "Server started: http:/%s:%d", getLocalIpAddr(), port);
+                    log.printf(Level.INFO, "Server started: http:/%s:%d", ConnectionProcessor.getLocalIpAddr(), port);
                     ExecutorService executorService = Executors.newCachedThreadPool();
                     while (!Thread.currentThread().isInterrupted()) {
                         // Processing request
@@ -78,23 +78,4 @@ public class SimpleHTTPServer {
         return result;
     }
 
-    /**
-     * Returns first fount ip addres, which contains "192" or "10.0"
-     */
-    @SneakyThrows
-    private static String getLocalIpAddr() {
-        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
-        List<InterfaceAddress> addrList = new ArrayList<>();
-        while (ifaces.hasMoreElements()) {
-            addrList.addAll(ifaces.nextElement().getInterfaceAddresses());
-        }
-        // Getting first local addr
-        String localAddr = "";
-        for (InterfaceAddress interfaceAddress : addrList) {
-            localAddr = interfaceAddress.getAddress().toString();
-            if (localAddr.contains("192") || localAddr.contains("10.0"))
-                break;
-        }
-        return localAddr;
-    }
 }

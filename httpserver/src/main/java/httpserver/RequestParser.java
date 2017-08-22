@@ -26,8 +26,10 @@ public interface RequestParser {
         // /path/file.ext HTTP/1.1...
         requestElements = requestElements[1].trim().split("\\s+", 2);
         if (requestElements[0].startsWith("/"))
-            if ("/".equals(requestElements[0]))
+            if ("/".equals(requestElements[0])) {
+                FileProcessor.generateIndexHtml();
                 httpRequest.setPath("/index.html");
+            }
             else
                 httpRequest.setPath(requestElements[0]);
         else

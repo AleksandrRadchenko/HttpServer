@@ -1,9 +1,15 @@
 package httpserver;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 @Log4j2
 public class ConnectionProcessor implements Runnable {
@@ -43,7 +49,7 @@ public class ConnectionProcessor implements Runnable {
         httpResponse.setConnection("close");
 
         //Body
-        byte[] file = FileProcessor.getFile(Strings.PATH + httpRequest.getPath());
+        byte[] file = FileProcessor.readFromFile(Strings.PATH + httpRequest.getPath());
         if (file == null) {
             httpResponse.setStatus(HttpCodes._404);
             writeResponse(httpResponse);
@@ -98,6 +104,26 @@ public class ConnectionProcessor implements Runnable {
             log.error(e);
         }
         return sb.toString();
+    }
+
+    /**
+     * Returns first fount ip addres, which contains "192" or "10.0"
+     */
+    @SneakyThrows
+    static String getLocalIpAddr() {
+        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
+        List<InterfaceAddress> addrList = new ArrayList<>();
+        while (ifaces.hasMoreElements()) {
+            addrList.addAll(ifaces.nextElement().getInterfaceAddresses());
+        }
+        // Getting first local addr
+        String localAddr = "";
+        for (InterfaceAddress interfaceAddress : addrList) {
+            localAddr = interfaceAddress.getAddress().toString();
+            if (localAddr.contains("192") || localAddr.contains("10.0"))
+                break;
+        }
+        return localAddr;
     }
 
     /**
