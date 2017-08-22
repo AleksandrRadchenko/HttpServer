@@ -3,6 +3,7 @@ package httpserver;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,10 +37,28 @@ final class FileProcessor {
         }
     }
 
-    static List<String> directoryListing(Path dir) {
+    /**
+     * Returns the contents of dir as the List<String>.
+     * @param dir Path object, represents the path to the directory to list.
+     * @return List<String> with names of all files and folders in the provided dir
+     * or empty ArrayList<String> if error occurs.
+     */
+    static List<String> directoryListing(final Path dir) {
         List<String> result = new ArrayList<>();
-
-        return result;
+        if (dir == null || !Files.isDirectory(dir)) {
+            log.error("Provided path is not the directory");
+            return result;
+        }
+        try {
+            DirectoryStream<Path> dirList = Files.newDirectoryStream(dir);
+            for (Path path : dirList) {
+                result.add(path.getFileName().toString());
+            }
+            dirList.close();
+        } catch (Exception e) {
+            log.error("Exception in directoryListing method.", e);
+        }
+        return new ArrayList<>();
     }
 
     /**
