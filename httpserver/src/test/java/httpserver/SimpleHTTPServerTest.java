@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import java.io.InputStream;
 import static org.junit.Assert.assertThat;
 
 public class SimpleHTTPServerTest {
-    SimpleHTTPServer server = new SimpleHTTPServer();
+    private SimpleHTTPServer server = new SimpleHTTPServer();
     private String[] args = {"8080"};
 
 ////  For single thread testing only
@@ -26,12 +26,12 @@ public class SimpleHTTPServerTest {
 //    }
 //
 
-////  For running server in local environment for tests
-//    @Test
-//    public void test0() throws Exception {
-//        String[] args = {"8080"};
-//        int expected = server.openPort(args);
-//    }
+//  For running server in local environment for tests
+    @Test
+    public void test0() throws Exception {
+        String[] args = {"8080"};
+        int expected = server.openPort(args);
+    }
 
     @Test
     public void strArgsFail() throws Exception {
@@ -80,7 +80,7 @@ public class SimpleHTTPServerTest {
 //    }
 
     private byte[] readInputStream(InputStream is) {
-        try (ByteArrayOutputStream os = new ByteArrayOutputStream();) {
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[0xFFFF];
             for (int len; (len = is.read(buffer)) != -1; )
                 os.write(buffer, 0, len);

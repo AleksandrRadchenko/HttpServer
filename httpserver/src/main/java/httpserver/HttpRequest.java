@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HttpRequest {
+class HttpRequest {
     private HttpMethod httpMethod;
     private String path;
     private Protocol protocol;

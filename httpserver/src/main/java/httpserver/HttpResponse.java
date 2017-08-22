@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -42,33 +42,38 @@ public class HttpResponse {
             return "";
     }
 
+    @SuppressWarnings("WeakerAccess")
     public byte[] getBody() {
         return body;
     }
 
     //Setters
-    public void setContentType(String contentType) {
+    @SuppressWarnings("WeakerAccess")
+    public void setContentType(final String contentType) {
         if (contentType != null && !"".equals(contentType.trim()))
             this.contentType = "Content-Type: " + contentType + "\r\n";
         else
             this.contentType = "";
     }
 
-    public void setContentLength(String contentLength) {
+    @SuppressWarnings("WeakerAccess")
+    public void setContentLength(final String contentLength) {
         if (contentLength != null && !"".equals(contentLength.trim()))
             this.contentLength = "Content-Length: " + contentLength + "\r\n";
         else
             this.contentLength = "";
     }
 
-    public void setConnection(String connection) {
+    @SuppressWarnings("WeakerAccess")
+    public void setConnection(final String connection) {
         if (connection != null && !"".equals(connection.trim()))
             this.connection = "Connection: " + connection + "\r\n";
         else
             this.connection = "";
     }
 
-    public void setBody(byte[] body) {
+    @SuppressWarnings("WeakerAccess")
+    public void setBody(final byte[] body) {
         if (body != null)
             this.body = body;
         else

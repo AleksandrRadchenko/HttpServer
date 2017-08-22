@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -7,18 +7,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+
 /**
  * Reads file from disk and returns as byte array. File size should not be
  * more than 2 Gb (Integer.MAX_VALUE), or it will be truncated to 2 Gb.
  */
 @Log4j2
-public class FileProcessor {
+final class FileProcessor {
     /**
-     * For files smaller then 2Gb
-     * @param fileName String representation of path to the file
-     * @return byte array with raw file contents
+     * Utility classes should not have a public or default constructor.
      */
-    public static byte[] getFile(String fileName) {
+    private FileProcessor() { }
+
+    /**
+     * For files smaller then 2Gb.
+     * @param fileName String representation of path to the file.
+     * @return byte array with raw file contents.
+     */
+    static byte[] getFile(final String fileName) {
         try {
             return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
@@ -28,12 +34,13 @@ public class FileProcessor {
     }
 
     /**
-     * Copied from Java 9 for educational purposes
+     * Copied from Java 9 for educational purposes.
      */
-    private static byte[] readFully(InputStream is, int length, boolean readAll)
+    private static byte[] readFully(final InputStream is, int length, final boolean readAll)
             throws IOException {
         byte[] output = {};
-        if (length == -1) length = Integer.MAX_VALUE;
+        if (length == -1)
+            length = Integer.MAX_VALUE;
         int pos = 0;
         while (pos < length) {
             int bytesToRead;
@@ -63,10 +70,10 @@ public class FileProcessor {
 
     /**
      * Remain here for study purposes.
-     * @param fileName String representation of path to the file
-     * @return
+     * @param fileName String representation of path to the file.
+     * @return byte array with raw file contents.
      */
-    private static byte[] getFile0(String fileName) {
+    private static byte[] getFile0(final String fileName) {
         byte[] result;
         try (FileInputStream fis = new FileInputStream(fileName);
              BufferedInputStream br = new BufferedInputStream(fis)) {

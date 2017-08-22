@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.Getter;
 import lombok.Setter;

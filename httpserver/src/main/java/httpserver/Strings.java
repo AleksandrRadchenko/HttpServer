@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 public interface Strings {
     String RESPONSE =

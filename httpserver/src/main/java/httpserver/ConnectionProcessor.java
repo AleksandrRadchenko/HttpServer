@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -13,7 +13,7 @@ public class ConnectionProcessor implements Runnable {
     private HttpRequest httpRequest;
     private HttpResponse httpResponse;
 
-    public ConnectionProcessor(Socket socket) {
+    ConnectionProcessor(Socket socket) {
         this.socket = socket;
 
         try {

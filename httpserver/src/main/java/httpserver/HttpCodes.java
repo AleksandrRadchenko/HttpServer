@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 public enum HttpCodes {
     _200("HTTP/1.1 200 OK"),
@@ -7,7 +7,7 @@ public enum HttpCodes {
 
     private final String codeString;
 
-    private HttpCodes(String codeString) {
+    HttpCodes(String codeString) {
         this.codeString = codeString;
     }
 

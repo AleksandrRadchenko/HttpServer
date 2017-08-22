@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -16,12 +16,13 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings("WeakerAccess")
 @Log4j2
 public class SimpleHTTPServer {
     private ServerSocket ss;
     @Getter
     private static int requestCounter = 0;
-    public static void increaseRequestCounter() {
+    static void increaseRequestCounter() {
         requestCounter++;
     }
 
@@ -33,7 +34,7 @@ public class SimpleHTTPServer {
      */
     @SneakyThrows
     public int openPort(String[] args) {
-        int result = 0;
+        int result;
         if ((args == null) || (args.length < 1)) {
             log.info("Port to listen not specified");
             result = 0;
@@ -77,10 +78,10 @@ public class SimpleHTTPServer {
         return result;
     }
 
-    @SneakyThrows
     /**
      * Returns first fount ip addres, which contains "192" or "10.0"
      */
+    @SneakyThrows
     private static String getLocalIpAddr() {
         Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
         List<InterfaceAddress> addrList = new ArrayList<>();

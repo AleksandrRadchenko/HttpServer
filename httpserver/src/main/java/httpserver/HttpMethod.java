@@ -1,4 +1,4 @@
-package HTTPserver;
+package httpserver;
 
 public enum HttpMethod {
     //  Supported

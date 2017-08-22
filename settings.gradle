@@ -1,4 +1,4 @@
 rootProject.name = 'JavaSchool'
 
-include 'HTTPserver',
+include 'httpserver',
         'other'
