@@ -4,8 +4,11 @@ import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -31,6 +34,12 @@ final class FileProcessor {
             log.error(e);
             return null;
         }
+    }
+
+    static List<String> directoryListing(Path dir) {
+        List<String> result = new ArrayList<>();
+
+        return result;
     }
 
     /**
