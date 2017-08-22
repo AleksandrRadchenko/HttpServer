@@ -26,13 +26,13 @@ public class SimpleHTTPServerTest {
 //    }
 //
 
-//  For running server in local environment for tests
-//  todo: comment this test before pushing
-    @Test
-    public void test0() throws Exception {
-        String[] args = {"8080"};
-        int expected = server.openPort(args);
-    }
+////  For running server in local environment for tests
+////  todo: comment this test before pushing
+//    @Test
+//    public void test0() throws Exception {
+//        String[] args = {"8080"};
+//        int expected = server.openPort(args);
+//    }
 
     @Test
     public void strArgsFail() throws Exception {
