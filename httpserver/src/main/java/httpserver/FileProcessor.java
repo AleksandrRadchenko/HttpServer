@@ -86,38 +86,16 @@ interface FileProcessor {
     }
 
     /**
-     * Copied from Java 9 (stackoverflow exactly) for educational purposes.
+     * Temporary method to conveniently print byte[]
+     *
+     * @param bytes byte array
      */
-    static byte[] readFully(final InputStream is, int length, final boolean readAll)
-            throws IOException {
-        byte[] output = {};
-        if (length == -1)
-            length = Integer.MAX_VALUE;
-        int pos = 0;
-        while (pos < length) {
-            int bytesToRead;
-            if (pos >= output.length) { // Only expand when there's no room
-                bytesToRead = Math.min(length - pos, output.length + 1024);
-                if (output.length < pos + bytesToRead) {
-                    output = Arrays.copyOf(output, pos + bytesToRead);
-                }
-            } else {
-                bytesToRead = output.length - pos;
-            }
-            int cc = is.read(output, pos, bytesToRead);
-            if (cc < 0) {
-                if (readAll && length != Integer.MAX_VALUE) {
-                    throw new EOFException("Detect premature EOF");
-                } else {
-                    if (output.length != pos) {
-                        output = Arrays.copyOf(output, pos);
-                    }
-                    break;
-                }
-            }
-            pos += cc;
+    static void printBytes(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append((char) b);
         }
-        return output;
+        System.out.println(sb);
     }
 
     /**

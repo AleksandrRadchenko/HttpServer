@@ -136,19 +136,6 @@ public class ConnectionProcessor implements Runnable {
     }
 
     /**
-     * Temporary method to conveniently print byte[]
-     *
-     * @param bytes byte array
-     */
-    private void printBytes(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append((char) b);
-        }
-        System.out.println(sb);
-    }
-
-    /**
      * Temporary method for debugging requests
      *
      * @param request String to print to System.out

@@ -3,6 +3,8 @@ package httpserver;
 import org.hamcrest.core.Is;
 import org.junit.Test;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,5 +23,4 @@ public class FileProcessorTest {
         expected.add("doNotChange.png");
         assertThat(actual, Is.is(expected));
     }
-
 }
