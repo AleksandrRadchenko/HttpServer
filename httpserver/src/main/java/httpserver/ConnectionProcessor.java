@@ -1,10 +1,20 @@
 package httpserver;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
+/**
+ * Processes provided socket for HttpRequest, forms HttpResponse object and
+ * writes it to the socket's output stream.
+ */
 @Log4j2
 public class ConnectionProcessor implements Runnable {
     private Socket socket;
@@ -24,6 +34,9 @@ public class ConnectionProcessor implements Runnable {
         }
     }
 
+    /**
+     * Forms HttpResponse object and writes it to socket's output stream.
+     */
     public void run() {
         httpResponse = new HttpResponse();
 
@@ -43,7 +56,7 @@ public class ConnectionProcessor implements Runnable {
         httpResponse.setConnection("close");
 
         //Body
-        byte[] file = FileProcessor.getFile(Strings.PATH + httpRequest.getPath());
+        byte[] file = FileProcessor.readFromFile(Strings.PATH + httpRequest.getPath());
         if (file == null) {
             httpResponse.setStatus(HttpCodes._404);
             writeResponse(httpResponse);
@@ -101,16 +114,25 @@ public class ConnectionProcessor implements Runnable {
     }
 
     /**
-     * Temporary method to conveniently print byte[]
-     *
-     * @param bytes byte array
+     * Returns first found local ip address, which contains "192" or "10.0".
+     * @return String representation of IP address, like "192.168.0.78" or
+     * empty String if none address wich begins from "10.0" or "192" found.
      */
-    private void printBytes(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append((char) b);
+    @SneakyThrows
+    static String getLocalIpAddr() {
+        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
+        List<InterfaceAddress> addrList = new ArrayList<>();
+        while (ifaces.hasMoreElements()) {
+            addrList.addAll(ifaces.nextElement().getInterfaceAddresses());
         }
-        System.out.println(sb);
+        // Getting first local addr
+        String localAddr = "";
+        for (InterfaceAddress interfaceAddress : addrList) {
+            localAddr = interfaceAddress.getAddress().toString();
+            if (localAddr.contains("192") || localAddr.contains("10.0"))
+                break;
+        }
+        return localAddr;
     }
 
     /**

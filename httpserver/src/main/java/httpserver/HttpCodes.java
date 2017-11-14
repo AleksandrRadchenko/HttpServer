@@ -1,5 +1,8 @@
 package httpserver;
 
+/**
+ * Holds messages for http status codes.
+ */
 public enum HttpCodes {
     _200("HTTP/1.1 200 OK"),
     _400("HTTP/1.1 400 Bad Request"),

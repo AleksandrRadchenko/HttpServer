@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class to start the server. Each socket, created by ServerSocket.accept() is provided to
+ * executor service. Port parse and server socket error's handling here.
+ */
 @SuppressWarnings("WeakerAccess")
 @Log4j2
 public class SimpleHTTPServer {
@@ -29,7 +33,7 @@ public class SimpleHTTPServer {
     /**
      * Starts HTTP server on specified port
      * @param args first argument should be port to start HTTP server on in String representation.
-     *             For example: "8080"
+     *             For example: "8080". Should be in range 1024 < port < 65536.
      * @return 1 if all ok, -1 if cant' parse for port number, 0 if no args provided
      */
     @SneakyThrows
@@ -48,7 +52,7 @@ public class SimpleHTTPServer {
                     log.info("specified port = " + port);
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
-                    log.printf(Level.INFO, "Server started: http:/%s:%d", getLocalIpAddr(), port);
+                    log.printf(Level.INFO, "Server started: http:/%s:%d", ConnectionProcessor.getLocalIpAddr(), port);
                     ExecutorService executorService = Executors.newCachedThreadPool();
                     while (!Thread.currentThread().isInterrupted()) {
                         // Processing request
@@ -78,23 +82,4 @@ public class SimpleHTTPServer {
         return result;
     }
 
-    /**
-     * Returns first fount ip addres, which contains "192" or "10.0"
-     */
-    @SneakyThrows
-    private static String getLocalIpAddr() {
-        Enumeration<NetworkInterface> ifaces = NetworkInterface.getNetworkInterfaces();
-        List<InterfaceAddress> addrList = new ArrayList<>();
-        while (ifaces.hasMoreElements()) {
-            addrList.addAll(ifaces.nextElement().getInterfaceAddresses());
-        }
-        // Getting first local addr
-        String localAddr = "";
-        for (InterfaceAddress interfaceAddress : addrList) {
-            localAddr = interfaceAddress.getAddress().toString();
-            if (localAddr.contains("192") || localAddr.contains("10.0"))
-                break;
-        }
-        return localAddr;
-    }
 }

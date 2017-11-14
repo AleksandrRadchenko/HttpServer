@@ -7,9 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Parses String request for Method, Path, Protocol, version, headers and body.
+ * Creates HttpRequest object with corresponding fields. Returns null if error.
+ */
 public interface RequestParser {
     org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(RequestParser.class);
-    Properties mimeTypes = new Properties();
 
     static HttpRequest parse(String request) {
         HttpRequest httpRequest = new HttpRequest();
@@ -26,8 +29,10 @@ public interface RequestParser {
         // /path/file.ext HTTP/1.1...
         requestElements = requestElements[1].trim().split("\\s+", 2);
         if (requestElements[0].startsWith("/"))
-            if ("/".equals(requestElements[0]))
+            if ("/".equals(requestElements[0])) {
+                FileProcessor.generateIndexHtml();
                 httpRequest.setPath("/index.html");
+            }
             else
                 httpRequest.setPath(requestElements[0]);
         else
@@ -54,7 +59,7 @@ public interface RequestParser {
         }
         httpRequest.setHeaders(headers);
 
-// TODO: 14.08.2017 body 
+        // TODO: 14.08.2017 body
         return httpRequest;
     }
 
@@ -62,13 +67,6 @@ public interface RequestParser {
         String mimeType = "text/html";
         try {
             mimeType = Files.probeContentType(Paths.get(path));
-////             Without using Files class. Loading local mime.types resource and query it for file extension
-//            mimeTypes.load(RequestParser.class.getClassLoader().getResourceAsStream(Strings.MIME_TYPES_PATH));
-//            String extension = ".html";
-//            int indexOfDot = path.lastIndexOf(".");
-//            if (indexOfDot > -1 && (indexOfDot != path.length() - 1))
-//                extension = path.substring(indexOfDot, path.length());
-//            mimeType = mimeTypes.getProperty(extension);
         } catch (IOException e) {
             log.error("Error while loading mime types. Using default 'text/html'.", e);
         }

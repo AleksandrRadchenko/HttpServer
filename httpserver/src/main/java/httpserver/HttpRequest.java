@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.Map;
 
+/**
+ * POJO to contain Http requests.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

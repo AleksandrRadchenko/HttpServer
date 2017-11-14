@@ -9,6 +9,9 @@ import java.io.InputStream;
 
 import static org.junit.Assert.assertThat;
 
+/**
+ * Tests for methods of SimpleHTTPServer class
+ */
 public class SimpleHTTPServerTest {
     private SimpleHTTPServer server = new SimpleHTTPServer();
     private String[] args = {"8080"};
@@ -67,7 +70,7 @@ public class SimpleHTTPServerTest {
 ////        connection.setRequestMethod("GET");
 ////        int responseCode = connection.getResponseCode();
 //        byte[] actual = readInputStream(connection.getInputStream());
-//        byte[] expected = FileProcessor.getFile(Strings.PATH + "/test.txt");
+//        byte[] expected = FileProcessor.readFromFile(Strings.PATH + "/test.txt");
 //        assertThat(actual, Is.is(expected));
 //    }
 //    @Test
@@ -76,7 +79,7 @@ public class SimpleHTTPServerTest {
 //        URL url = new URL(urlString);
 //        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //        byte[] actual = readInputStream(connection.getInputStream());
-//        byte[] expected = FileProcessor.getFile(Strings.PATH + "/face4small.jpg");
+//        byte[] expected = FileProcessor.readFromFile(Strings.PATH + "/face4small.jpg");
 //        assertThat(actual, Is.is(expected));
 //    }
 
