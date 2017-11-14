@@ -12,9 +12,16 @@ public interface Strings {
                     "\r\n\r\n%s" +
                     "";
 
-    String PATH = "src/main/resources/HTTPServer/files";
+    // Root path, where project is started
+    String PATH = ".";
+//    String PATH = "src/main/resources/HTTPServer/files";
+
+    Boolean SHOW_FOLDERS = false;
+
+
 //    String MIME_TYPES_PATH = "src/main/resources/mime.types";
     String MIME_TYPES_PATH = "mime.types";
+
 
     // For debug:
     String FILENAME1 = "src/main/resources/HTTPServer/files/test.txt";

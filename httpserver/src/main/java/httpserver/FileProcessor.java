@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static httpserver.Strings.SHOW_FOLDERS;
+
 
 /**
  * Utility interface for methods to operate files.
@@ -21,6 +23,7 @@ interface FileProcessor {
     /**
      * Reads file from disk and returns as byte array. File size should not be
      * more than 2 Gb (Integer.MAX_VALUE), or it will be truncated to 2 Gb.
+     *
      * @param fileName String representation of path to the file.
      * @return byte array with raw file contents.
      */
@@ -43,6 +46,7 @@ interface FileProcessor {
 
     /**
      * Returns the contents of dir as the List<String>.
+     *
      * @param dir Path object, represents the path to the directory to list.
      * @return List<String> with names of all files and folders in the provided dir
      * or empty ArrayList<String> if error occurs.
@@ -55,8 +59,9 @@ interface FileProcessor {
         }
         try {
             DirectoryStream<Path> dirList = Files.newDirectoryStream(dir);
+            // Add path to html output only if it is not directory (if SHOW_FOLDERS == false)
             for (Path path : dirList) {
-                result.add(path.getFileName().toString());
+                if (!path.toFile().isDirectory() || SHOW_FOLDERS) result.add(path.getFileName().toString());
             }
             dirList.close();
         } catch (Exception e) {
@@ -100,6 +105,7 @@ interface FileProcessor {
 
     /**
      * Remain here for study purposes.
+     *
      * @param fileName String representation of path to the file.
      * @return byte array with raw file contents.
      */
