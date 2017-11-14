@@ -1,14 +1,13 @@
 package httpserver;
 
-import lombok.extern.log4j.Log4j2;
-
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static httpserver.Strings.SHOW_FOLDERS;
@@ -18,7 +17,7 @@ import static httpserver.Strings.SHOW_FOLDERS;
  * Utility interface for methods to operate files.
  */
 interface FileProcessor {
-    org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(RequestParser.class);
+    Logger log = new Logger();
 
     /**
      * Reads file from disk and returns as byte array. File size should not be
@@ -31,7 +30,7 @@ interface FileProcessor {
         try {
             return Files.readAllBytes(Paths.get(fileName));
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }
@@ -40,7 +39,7 @@ interface FileProcessor {
         try {
             Files.write(path, contents);
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
     }
 
@@ -65,7 +64,7 @@ interface FileProcessor {
             }
             dirList.close();
         } catch (Exception e) {
-            log.error("Exception in directoryListing method.", e);
+            log.error("Exception in directoryListing method. " + e.getMessage());
             return new ArrayList<>();
         }
         return result;
@@ -120,7 +119,7 @@ interface FileProcessor {
                 result[i++] = (byte) read;
             return result;
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null;
         }
     }

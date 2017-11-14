@@ -2,17 +2,10 @@ package httpserver;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Level;
 
 import java.io.IOException;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -21,11 +14,11 @@ import java.util.concurrent.Executors;
  * executor service. Port parse and server socket error's handling here.
  */
 @SuppressWarnings("WeakerAccess")
-@Log4j2
 public class SimpleHTTPServer {
     private ServerSocket ss;
     @Getter
     private static int requestCounter = 0;
+    private static Logger log = new Logger();
     static void increaseRequestCounter() {
         requestCounter++;
     }
@@ -52,7 +45,7 @@ public class SimpleHTTPServer {
                     log.info("specified port = " + port);
                     result = 1;
                     ss = new ServerSocket(port); // Starting server
-                    log.printf(Level.INFO, "Server started: http:/%s:%d", ConnectionProcessor.getLocalIpAddr(), port);
+                    log.info(String.format("Server started: http:/%s:%d%n", ConnectionProcessor.getLocalIpAddr(), port));
                     ExecutorService executorService = Executors.newCachedThreadPool();
                     while (!Thread.currentThread().isInterrupted()) {
                         // Processing request
@@ -75,7 +68,7 @@ public class SimpleHTTPServer {
                 try {
                     if (ss != null) ss.close();
                 } catch (IOException e) {
-                    log.error("Error while closing server socket", e);
+                    log.error("Error while closing server socket, " + e.getMessage());
                 }
             }
         }

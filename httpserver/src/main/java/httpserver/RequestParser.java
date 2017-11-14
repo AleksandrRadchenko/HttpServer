@@ -12,8 +12,7 @@ import java.util.Properties;
  * Creates HttpRequest object with corresponding fields. Returns null if error.
  */
 public interface RequestParser {
-    org.apache.logging.log4j.Logger log = org.apache.logging.log4j.LogManager.getLogger(RequestParser.class);
-
+    Logger log = new Logger();
     static HttpRequest parse(String request) {
         HttpRequest httpRequest = new HttpRequest();
 
@@ -22,7 +21,7 @@ public interface RequestParser {
         try {
             httpRequest.setHttpMethod(HttpMethod.valueOf(requestElements[0]));
         } catch (NullPointerException | IllegalArgumentException e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null; // Sorry
         }
 
@@ -45,7 +44,7 @@ public interface RequestParser {
             httpRequest.setProtocol(Protocol.valueOf(protocol[0]));
             httpRequest.getProtocol().setVersion(protocol[1]);
         } catch (NullPointerException | IllegalArgumentException e) {
-            log.error(e);
+            log.error(e.getMessage());
             return null; // Sorry again
         }
 
@@ -68,7 +67,7 @@ public interface RequestParser {
         try {
             mimeType = Files.probeContentType(Paths.get(path));
         } catch (IOException e) {
-            log.error("Error while loading mime types. Using default 'text/html'.", e);
+            log.error("Error while loading mime types. Using default 'text/html'. " + e.getMessage());
         }
         return mimeType == null ?
                 "text/html" :

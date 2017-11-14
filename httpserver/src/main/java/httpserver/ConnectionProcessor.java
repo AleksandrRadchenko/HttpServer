@@ -1,7 +1,6 @@
 package httpserver;
 
 import lombok.SneakyThrows;
-import lombok.extern.log4j.Log4j2;
 
 import java.io.*;
 import java.net.InterfaceAddress;
@@ -15,8 +14,8 @@ import java.util.List;
  * Processes provided socket for HttpRequest, forms HttpResponse object and
  * writes it to the socket's output stream.
  */
-@Log4j2
 public class ConnectionProcessor implements Runnable {
+    private Logger log = new Logger();
     private Socket socket;
     private OutputStream os;
     private InputStream is;
@@ -30,7 +29,7 @@ public class ConnectionProcessor implements Runnable {
             os = socket.getOutputStream();
             is = socket.getInputStream();
         } catch (IOException e) {
-            log.error("Error while creating socket input/output stream. ", e);
+            log.error("Error while creating socket input/output stream. " + e.getMessage());
         }
     }
 
@@ -82,12 +81,12 @@ public class ConnectionProcessor implements Runnable {
             log.info(r.getStatus().toString() + (httpRequest == null ? "" : " for URI: " + httpRequest.getPath()) );
             // TODO: 13.08.2017 serve connection keep-alive status, don't close socket's input stream
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
         } finally {
             try {
                 socket.close();
             } catch (IOException e) {
-                log.error(e);
+                log.error(e.getMessage());
             }
         }
     }
@@ -108,7 +107,7 @@ public class ConnectionProcessor implements Runnable {
                 sb.append(System.lineSeparator());
             }
         } catch (IOException e) {
-            log.error(e);
+            log.error(e.getMessage());
         }
         return sb.toString();
     }
